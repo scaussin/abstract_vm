@@ -1,7 +1,10 @@
 #ifndef CONTROLLER_HPP
 # define CONTROLLER_HPP
 
+#define END_STDIN ";;"
+
 #include <string>
+#include <vector>
 #include <iostream>
 #include <fstream>
 
@@ -9,14 +12,15 @@ class Controller {
 
 	public :
 		Controller();
-		Controller(std::istream *, bool);
+		Controller(std::istream *, std::string);
 		Controller(Controller const &);
 		Controller &operator=(Controller const &rhs);
 		~Controller();
 		std::istream *_in;
-		bool _readInFile;
+		std::string _endInstruct;
+
 	private :
-		void readIn();
+		std::vector<std::string> readIn();
 };
 
 #endif

@@ -1,13 +1,17 @@
 #include "Controller.hpp"
+#include "Parser.hpp"
 
 Controller::Controller()
 {
-
 }
 
-Controller::Controller(std::istream *in, bool readInFile) : _in(in), _readInFile(readInFile)
+Controller::Controller(std::istream *in, std::string endInstruct) : _in(in), _endInstruct(endInstruct)
 {
-	readIn();
+	Parser parser;
+	std::vector<std::string> data;
+
+	data = readIn();
+	parser = Parser(data, endInstruct);
 }
 
 Controller::Controller(Controller const &rhs)
@@ -17,21 +21,27 @@ Controller::Controller(Controller const &rhs)
 
 Controller::~Controller()
 {
-	if (_in && _readInFile == true)
-		((std::ifstream *)(_in))->close();
 }
 
 Controller &Controller::operator=(Controller const &rhs)
 {
 	_in = rhs._in;
+	_endInstruct = rhs._endInstruct;
 	return (*this);
 }
 
-void Controller::readIn()
+std::vector<std::string> Controller::readIn()
 {
 	std::string s;
-	*_in >> s;
-	std::cout << "value: " << s << std::endl;
-	*_in >> s;
-	std::cout << "value: " << s << std::endl;
+	int i = 0;
+	std::vector<std::string> data;
+
+	while (getline(*_in, s, '\n'))
+	{
+		data.push_back(s);
+		if (_endInstruct == END_STDIN && s == END_STDIN)
+			break;
+		i++;
+	}
+	return (data);
 }
