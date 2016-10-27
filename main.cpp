@@ -9,7 +9,7 @@ int	main(int ac, char **av)
 		in = new std::ifstream();
 		in->open(av[1]);
 		if (in->is_open())
-  		{
+		{
 			controller = Controller(in, "exit");
 			in->close();
 		}

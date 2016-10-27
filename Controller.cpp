@@ -1,5 +1,5 @@
 #include "Controller.hpp"
-#include "Parser.hpp"
+#include "Lexer.hpp"
 
 Controller::Controller()
 {
@@ -7,11 +7,11 @@ Controller::Controller()
 
 Controller::Controller(std::istream *in, std::string endInstruct) : _in(in), _endInstruct(endInstruct)
 {
-	Parser parser;
+	Lexer lexer;
 	std::vector<std::string> data;
 
 	data = readIn();
-	parser = Parser(data, endInstruct);
+	lexer = Lexer(data, endInstruct);
 }
 
 Controller::Controller(Controller const &rhs)

@@ -1,11 +1,32 @@
 #ifndef MAIN_HPP
 # define MAIN_HPP
 
-typedef struct	s_token
+enum eOperandType
+{
+    Int8,
+    Int16,
+    Int32,
+    Float,
+    Double
+};
+
+enum eTokenType
+{
+    err,
+    instr,
+    val,
+    com
+};
+
+typedef struct	eToken
 {
 	std::string data;
-	struct s_token *down;
-	struct s_token *right;
-}				t_token;
+	int line;
+    eTokenType type;
+	struct eToken *down;
+	struct eToken *right;
+	struct eToken *left;
+}				tToken;
+
 
 #endif
