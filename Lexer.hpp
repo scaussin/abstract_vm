@@ -6,10 +6,20 @@
 #include <iostream>
 #include <cstring>
 #include <sstream>
+#include <regex>
+#include <map>
 #include "main.hpp"
 
-class Lexer {
+typedef struct	sMatchInstr
+{
+	std::regex regex;
+	eInstrType type;
+	sMatchInstr(std::regex reg, eInstrType inst) : regex(reg), type(inst)
+	{
+	}
+}				tMatchInstr;
 
+class Lexer {
 	public :
 		Lexer();
 		Lexer(std::vector<std::string>, std::string);
@@ -19,9 +29,13 @@ class Lexer {
 		std::vector<std::string> _data;
 		std::string _endInstruct;
 		tToken *_tokens;
+		std::vector<tMatchInstr> _matchInstr;
+		// std::vector<tMatchValue> _matchValue;
+
 	private :
 		void vectorToToken(std::vector<std::string>);
-        void identifyTokens(tToken *token);
+		void identifyTokens(tToken *token);
+		void initMatchVector();
 		
 };
 

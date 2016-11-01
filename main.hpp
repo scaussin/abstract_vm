@@ -1,32 +1,50 @@
 #ifndef MAIN_HPP
 # define MAIN_HPP
 
-enum eOperandType
-{
-    Int8,
-    Int16,
-    Int32,
-    Float,
-    Double
-};
-
 enum eTokenType
 {
-    err,
-    instr,
-    val,
-    com
+	err,
+	instr,
+	val,
+	com
+};
+
+enum eValueType
+{
+	ValueNone,
+	ValueInt8,
+	ValueInt16,
+	ValueInt32,
+	ValueFloat,
+	ValueDouble
+};
+
+enum eInstrType
+{
+	InstrNone,
+	InstrPush,
+	InstrPop,
+	InstrDump,
+	InstrAssert,
+	InstrAdd,
+	InstrSub,
+	InstrMul,
+	InstrDiv,
+	InstrMod,
+	InstrPrint,
+	InstrExit
 };
 
 typedef struct	eToken
 {
 	std::string data;
 	int line;
-    eTokenType type;
+	eTokenType type;
+	eValueType valueType;
+	eInstrType instrType;
 	struct eToken *down;
 	struct eToken *right;
 	struct eToken *left;
 }				tToken;
-
 
 #endif

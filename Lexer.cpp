@@ -1,4 +1,4 @@
-#include "lexer.hpp"
+#include "Lexer.hpp"
 
 Lexer::Lexer()
 {
@@ -6,6 +6,7 @@ Lexer::Lexer()
 
 Lexer::Lexer(std::vector<std::string> data, std::string endInstruct) : _data(data), _endInstruct(endInstruct)
 {
+	initMatchVector();
 	vectorToToken(data);
 	identifyTokens(_tokens);
 }
@@ -19,11 +20,28 @@ Lexer::~Lexer()
 {
 }
 
+void Lexer::initMatchVector()
+{
+	_matchInstr.push_back(sMatchInstr(std::regex("^push$"), InstrNone));
+	_matchInstr.push_back(sMatchInstr(std::regex("^pop$"), InstrPop));
+	_matchInstr.push_back(sMatchInstr(std::regex("^dump$"), InstrDump));
+	_matchInstr.push_back(sMatchInstr(std::regex("^assert$"), InstrAssert));
+	_matchInstr.push_back(sMatchInstr(std::regex("^add$"), InstrAdd));
+	_matchInstr.push_back(sMatchInstr(std::regex("^sub$"), InstrSub));
+	_matchInstr.push_back(sMatchInstr(std::regex("^mul$"), InstrMul));
+	_matchInstr.push_back(sMatchInstr(std::regex("^div$"), InstrDiv));
+	_matchInstr.push_back(sMatchInstr(std::regex("^mod$"), InstrMod));
+	_matchInstr.push_back(sMatchInstr(std::regex("^print$"), InstrPrint));
+	_matchInstr.push_back(sMatchInstr(std::regex("^exit$"), InstrExit));
+}
+
 Lexer &Lexer::operator=(Lexer const &rhs)
 {
 	_data = rhs._data;
 	_tokens = rhs._tokens;
 	_endInstruct = rhs._endInstruct;
+	_matchInstr = rhs._matchInstr;
+	// _matchValue = rhs._matchValue;
 	return (*this);
 }
 
@@ -42,17 +60,17 @@ void Lexer::vectorToToken(std::vector<std::string> data)
 		while (std::getline(stream, strData, ' '))
 		{
 			if (strData != "")
-            {
-                newToken = (tToken *)malloc(sizeof(tToken));
-                newToken->data = strData;
-                newToken->line = line;
-                newToken->down = tmpDown;
-                newToken->left = tmpLeft;
-                newToken->right = NULL;
-                if (tmpLeft)
-                    tmpLeft->right = newToken;
-                tmpLeft = newToken;
-            }
+			{
+				newToken = (tToken *)malloc(sizeof(tToken));
+				newToken->data = strData;
+				newToken->line = line;
+				newToken->down = tmpDown;
+				newToken->left = tmpLeft;
+				newToken->right = NULL;
+				if (tmpLeft)
+					tmpLeft->right = newToken;
+				tmpLeft = newToken;
+			}
 		}
 		while(newToken->left)
 		{
@@ -63,6 +81,8 @@ void Lexer::vectorToToken(std::vector<std::string> data)
 	}
 	_tokens = newToken;
 }
+
+
 
 void Lexer::identifyTokens(tToken *token)
 {
