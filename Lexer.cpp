@@ -22,7 +22,7 @@ Lexer::~Lexer()
 
 void Lexer::initMatchVector()
 {
-	_matchInstr.push_back(sMatchInstr(std::regex("^push$"), InstrNone));
+	_matchInstr.push_back(sMatchInstr(std::regex("^push$"), InstrPush));
 	_matchInstr.push_back(sMatchInstr(std::regex("^pop$"), InstrPop));
 	_matchInstr.push_back(sMatchInstr(std::regex("^dump$"), InstrDump));
 	_matchInstr.push_back(sMatchInstr(std::regex("^assert$"), InstrAssert));
@@ -33,6 +33,12 @@ void Lexer::initMatchVector()
 	_matchInstr.push_back(sMatchInstr(std::regex("^mod$"), InstrMod));
 	_matchInstr.push_back(sMatchInstr(std::regex("^print$"), InstrPrint));
 	_matchInstr.push_back(sMatchInstr(std::regex("^exit$"), InstrExit));
+
+	_matchValue.push_back(sMatchValue(std::regex("^Int8\\(-?[0-9]+\\)$"), ValueInt8));
+	_matchValue.push_back(sMatchValue(std::regex("^Int16\\(-?[0-9]+\\)$"), ValueInt16));
+	_matchValue.push_back(sMatchValue(std::regex("^Int32\\(-?[0-9]+\\)$"), ValueInt32));
+	_matchValue.push_back(sMatchValue(std::regex("^Float\\(-?\\d+\\.{1}\\d+\\)$"), ValueFloat));
+	_matchValue.push_back(sMatchValue(std::regex("^Double\\(-?\\d+\\.{1}\\d+\\)$"), ValueDouble));	
 }
 
 Lexer &Lexer::operator=(Lexer const &rhs)
@@ -41,7 +47,7 @@ Lexer &Lexer::operator=(Lexer const &rhs)
 	_tokens = rhs._tokens;
 	_endInstruct = rhs._endInstruct;
 	_matchInstr = rhs._matchInstr;
-	// _matchValue = rhs._matchValue;
+	_matchValue = rhs._matchValue;
 	return (*this);
 }
 
@@ -62,6 +68,9 @@ void Lexer::vectorToToken(std::vector<std::string> data)
 			if (strData != "")
 			{
 				newToken = (tToken *)malloc(sizeof(tToken));
+				newToken->type = err;
+				newToken->valueType = ValueNone;
+				newToken->instrType = InstrNone;
 				newToken->data = strData;
 				newToken->line = line;
 				newToken->down = tmpDown;
@@ -72,7 +81,7 @@ void Lexer::vectorToToken(std::vector<std::string> data)
 				tmpLeft = newToken;
 			}
 		}
-		while(newToken->left)
+		while(newToken && newToken->left)
 		{
 			newToken = newToken->left;
 		}
@@ -82,11 +91,25 @@ void Lexer::vectorToToken(std::vector<std::string> data)
 	_tokens = newToken;
 }
 
-
-
 void Lexer::identifyTokens(tToken *token)
 {
-	std::cout << token->data << std::endl;
+	for (std::vector<tMatchInstr>::iterator i = _matchInstr.begin(); i != _matchInstr.end(); ++i)
+	{
+		if (std::regex_match(token->data, i->regex))
+		{
+			token->type = instr;
+			token->instrType = i->type;
+		}
+	}
+	for (std::vector<tMatchValue>::iterator i = _matchValue.begin(); i != _matchValue.end(); ++i)
+	{
+		if (std::regex_match(token->data, i->regex))
+		{
+			token->type = val;
+			token->valueType = i->type;
+		}
+	}
+	std::cout << token->line << token->data << std::endl << "    [type: " << token->type << " value: " << token->valueType << " instr: " << token->instrType << "]"<<std::endl;
 	if (token->right)
 		identifyTokens(token->right);
 	else if(token->down)

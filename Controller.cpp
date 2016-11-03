@@ -41,6 +41,10 @@ std::vector<std::string> Controller::readIn()
 		data.push_back(s);
 		if (_endInstruct == END_STDIN && s == END_STDIN)
 			break;
+		if (data.back().find(';') != std::string::npos)
+			data.back().resize(data.back().find(';'));
+		/*if (data.back() == "")
+			data.pop_back();*/
 		i++;
 	}
 	return (data);

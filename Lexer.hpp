@@ -7,7 +7,7 @@
 #include <cstring>
 #include <sstream>
 #include <regex>
-#include <map>
+#include <iomanip>
 #include "main.hpp"
 
 typedef struct	sMatchInstr
@@ -18,6 +18,16 @@ typedef struct	sMatchInstr
 	{
 	}
 }				tMatchInstr;
+
+typedef struct	sMatchValue
+{
+	std::regex regex;
+	eValueType type;
+	sMatchValue(std::regex reg, eValueType value) : regex(reg), type(value)
+	{
+	}
+}				tMatchValue;
+
 
 class Lexer {
 	public :
@@ -30,7 +40,7 @@ class Lexer {
 		std::string _endInstruct;
 		tToken *_tokens;
 		std::vector<tMatchInstr> _matchInstr;
-		// std::vector<tMatchValue> _matchValue;
+		std::vector<tMatchValue> _matchValue;
 
 	private :
 		void vectorToToken(std::vector<std::string>);

@@ -5,8 +5,7 @@ enum eTokenType
 {
 	err,
 	instr,
-	val,
-	com
+	val
 };
 
 enum eValueType

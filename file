@@ -1,6 +1,8 @@
-aaa aa
-bbb
-ccc cc vv dd
-ddd
-eee
-end
+;ss
+push Int32(20)
+push Int8(50)
+push Double(0.50)
+dump;comcom
+;comcomcom
+push;comcom
+
