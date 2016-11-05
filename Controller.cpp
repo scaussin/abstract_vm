@@ -1,5 +1,4 @@
 #include "Controller.hpp"
-#include "Lexer.hpp"
 
 Controller::Controller()
 {
@@ -8,10 +7,18 @@ Controller::Controller()
 Controller::Controller(std::istream *in, std::string endInstruct) : _in(in), _endInstruct(endInstruct)
 {
 	Lexer lexer;
+	Parser parser;
 	std::vector<std::string> data;
 
 	data = readIn();
-	lexer = Lexer(data, endInstruct);
+	
+	try {
+		lexer = Lexer(data, endInstruct);
+		parser = Parser(lexer._tokens);
+	}
+	catch(std::exception const& e) {
+		std::cerr << "AbstractVM stopped." << std::endl;
+	}
 }
 
 Controller::Controller(Controller const &rhs)

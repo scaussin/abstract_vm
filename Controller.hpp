@@ -7,6 +7,9 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
+#include "Lexer.hpp"
+#include "Parser.hpp"
+#include "AbstractException.hpp"
 
 class Controller {
 

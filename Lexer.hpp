@@ -9,6 +9,7 @@
 #include <regex>
 #include <iomanip>
 #include "main.hpp"
+#include "AbstractException.hpp"
 
 typedef struct	sMatchInstr
 {

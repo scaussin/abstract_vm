@@ -1,5 +1,4 @@
 #include "Lexer.hpp"
-#include "AbstractException.hpp"
 
 Lexer::Lexer()
 {
@@ -9,12 +8,7 @@ Lexer::Lexer(std::vector<std::string> data, std::string endInstruct) : _data(dat
 {
 	initMatchVector();
 	vectorToToken(data);
-	try {
-		identifyTokens(_tokens);
-	}
-	catch(std::exception const& e) {
-		std::cerr << "ERROR" << std::endl;
-	}
+	identifyTokens(_tokens);
 }
 
 Lexer::Lexer(Lexer const &rhs)
@@ -24,6 +18,16 @@ Lexer::Lexer(Lexer const &rhs)
 
 Lexer::~Lexer()
 {
+}
+
+Lexer &Lexer::operator=(Lexer const &rhs)
+{
+	_data = rhs._data;
+	_tokens = rhs._tokens;
+	_endInstruct = rhs._endInstruct;
+	_matchInstr = rhs._matchInstr;
+	_matchValue = rhs._matchValue;
+	return (*this);
 }
 
 void Lexer::initMatchVector()
@@ -45,16 +49,6 @@ void Lexer::initMatchVector()
 	_matchValue.push_back(sMatchValue(std::regex("^Int32\\(-?[0-9]+\\)$"), ValueInt32));
 	_matchValue.push_back(sMatchValue(std::regex("^Float\\(-?\\d+\\.{1}\\d+\\)$"), ValueFloat));
 	_matchValue.push_back(sMatchValue(std::regex("^Double\\(-?\\d+\\.{1}\\d+\\)$"), ValueDouble));	
-}
-
-Lexer &Lexer::operator=(Lexer const &rhs)
-{
-	_data = rhs._data;
-	_tokens = rhs._tokens;
-	_endInstruct = rhs._endInstruct;
-	_matchInstr = rhs._matchInstr;
-	_matchValue = rhs._matchValue;
-	return (*this);
 }
 
 void Lexer::vectorToToken(std::vector<std::string> data)
@@ -118,37 +112,20 @@ void Lexer::identifyTokens(tToken *token)
 	try
 	{
 		if (token->type == err)
-			throw(AbstractException(std::to_string(token->line)));
+			throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError:\033[m Unknown instruction\n\t" + token->data /*+ "\n"*/));
 	}
 	catch(std::exception const& e)
 	{
-		std::cerr << "lexer error at line: " << e.what() << std::endl;
+		std::cerr << e.what() << std::endl;
 		if (token->right)
 			identifyTokens(token->right);
 		else if(token->down)
 			identifyTokens(token->down);
 		throw;
 	}
- 
 	//std::cout << token->line << token->data << std::endl << "    [type: " << token->type << " value: " << token->valueType << " instr: " << token->instrType << "]"<<std::endl;
 	if (token->right)
 		identifyTokens(token->right);
 	else if(token->down)
 		identifyTokens(token->down);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
