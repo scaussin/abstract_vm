@@ -1,4 +1,5 @@
 #include "Lexer.hpp"
+#include "AbstractException.hpp"
 
 Lexer::Lexer()
 {
@@ -8,7 +9,12 @@ Lexer::Lexer(std::vector<std::string> data, std::string endInstruct) : _data(dat
 {
 	initMatchVector();
 	vectorToToken(data);
-	identifyTokens(_tokens);
+	try {
+		identifyTokens(_tokens);
+	}
+	catch(std::exception const& e) {
+		std::cerr << "ERROR" << std::endl;
+	}
 }
 
 Lexer::Lexer(Lexer const &rhs)
@@ -109,7 +115,22 @@ void Lexer::identifyTokens(tToken *token)
 			token->valueType = i->type;
 		}
 	}
-	std::cout << token->line << token->data << std::endl << "    [type: " << token->type << " value: " << token->valueType << " instr: " << token->instrType << "]"<<std::endl;
+	try
+	{
+		if (token->type == err)
+			throw(AbstractException(std::to_string(token->line)));
+	}
+	catch(std::exception const& e)
+	{
+		std::cerr << "lexer error at line: " << e.what() << std::endl;
+		if (token->right)
+			identifyTokens(token->right);
+		else if(token->down)
+			identifyTokens(token->down);
+		throw;
+	}
+ 
+	//std::cout << token->line << token->data << std::endl << "    [type: " << token->type << " value: " << token->valueType << " instr: " << token->instrType << "]"<<std::endl;
 	if (token->right)
 		identifyTokens(token->right);
 	else if(token->down)
