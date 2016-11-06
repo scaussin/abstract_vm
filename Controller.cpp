@@ -11,13 +11,12 @@ Controller::Controller(std::istream *in, std::string endInstruct) : _in(in), _en
 	std::vector<std::string> data;
 
 	data = readIn();
-	
 	try {
 		lexer = Lexer(data, endInstruct);
-		parser = Parser(lexer._tokens);
+		parser = Parser(lexer._tokens, _endInstruct);
 	}
 	catch(std::exception const& e) {
-		std::cerr << "AbstractVM stopped." << std::endl;
+		std::cerr << "AbstractVM stopped : Error" << std::endl;
 	}
 }
 

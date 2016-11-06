@@ -7,7 +7,14 @@ Lexer::Lexer()
 Lexer::Lexer(std::vector<std::string> data, std::string endInstruct) : _data(data), _endInstruct(endInstruct)
 {
 	initMatchVector();
-	vectorToToken(data);
+	try {
+		vectorToToken(data);
+	}
+	catch (std::exception const& e)
+	{
+		std::cerr << e.what() << std::endl;
+		throw;
+	}
 	identifyTokens(_tokens);
 }
 
@@ -27,7 +34,7 @@ Lexer &Lexer::operator=(Lexer const &rhs)
 	_endInstruct = rhs._endInstruct;
 	_matchInstr = rhs._matchInstr;
 	_matchValue = rhs._matchValue;
-	return (*this);
+    return (*this);
 }
 
 void Lexer::initMatchVector()
@@ -43,12 +50,13 @@ void Lexer::initMatchVector()
 	_matchInstr.push_back(sMatchInstr(std::regex("^mod$"), InstrMod));
 	_matchInstr.push_back(sMatchInstr(std::regex("^print$"), InstrPrint));
 	_matchInstr.push_back(sMatchInstr(std::regex("^exit$"), InstrExit));
+	_matchInstr.push_back(sMatchInstr(std::regex("^;;$"), InstrExit));
 
 	_matchValue.push_back(sMatchValue(std::regex("^Int8\\(-?[0-9]+\\)$"), ValueInt8));
 	_matchValue.push_back(sMatchValue(std::regex("^Int16\\(-?[0-9]+\\)$"), ValueInt16));
 	_matchValue.push_back(sMatchValue(std::regex("^Int32\\(-?[0-9]+\\)$"), ValueInt32));
 	_matchValue.push_back(sMatchValue(std::regex("^Float\\(-?\\d+\\.{1}\\d+\\)$"), ValueFloat));
-	_matchValue.push_back(sMatchValue(std::regex("^Double\\(-?\\d+\\.{1}\\d+\\)$"), ValueDouble));	
+	_matchValue.push_back(sMatchValue(std::regex("^Double\\(-?\\d+\\.{1}\\d+\\)$"), ValueDouble));
 }
 
 void Lexer::vectorToToken(std::vector<std::string> data)
@@ -89,6 +97,8 @@ void Lexer::vectorToToken(std::vector<std::string> data)
 		line--;
 	}
 	_tokens = newToken;
+	if (_tokens == NULL)
+		throw(AbstractException("\033[31mError lexer:\033[m No instruction given"));
 }
 
 void Lexer::identifyTokens(tToken *token)
@@ -112,7 +122,7 @@ void Lexer::identifyTokens(tToken *token)
 	try
 	{
 		if (token->type == err)
-			throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError:\033[m Unknown instruction\n\t" + token->data /*+ "\n"*/));
+			throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError lexer:\033[m Instruction is unknown\n\t" + token->data /*+ "\n"*/));
 	}
 	catch(std::exception const& e)
 	{
