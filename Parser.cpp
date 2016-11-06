@@ -6,11 +6,20 @@ Parser::Parser()
 Parser::Parser(tToken *tokens, std::string endInst) : _tokens(tokens), _endInst(endInst)
 {
 	int countInstrEnd = 0;
+
+	initCheckVector();
 	checkTokens(tokens, &countInstrEnd);
-	if (countInstrEnd == 0)
-		throw(AbstractException("\033[31mError parser:\033[m 'end' instruction is required"));
-	else if (countInstrEnd > 1)
-		throw(AbstractException("\033[31mError parser:\033[m Multiple 'end' instruction"));
+	try {
+		if (countInstrEnd == 0)
+			throw(AbstractException("\033[31mError parser:\033[m 'end' instruction is required"));
+		else if (countInstrEnd > 1)
+			throw(AbstractException("\033[31mError parser:\033[m Multiple 'end' instruction"));
+	}
+	catch(std::exception const& e)
+	{
+		std::cerr << e.what() << std::endl;
+		throw;
+	}
 }
 
 Parser::Parser(Parser const &rhs)
@@ -152,17 +161,23 @@ void Parser::checkDouble(tToken *token)
 
 void Parser::checkTokens(tToken *token, int *countInstrEnd)
 {
+	// std::cout << token->line << token->data << std::endl << "    [type: " << token->type << " value: " << token->valueType << " instr: " << token->instrType << "]"<<std::endl;
 	try
 	{
 		if (token->type == instr)
 		{
+			// std::cout << token->data << "ok1\n";
 			for (std::vector<tCheckInstr>::iterator i = _checkInstr.begin(); i != _checkInstr.end(); ++i)
 			{
 				if (token->instrType == i->type)
 				{
-					i->func(token);
+					// std::cout << "ok\n";
+					(this->*i->func)(token);
 					if (token->instrType == InstrExit)
-						*countInstrEnd++;
+					{
+						// std::cout << "ex\n";
+						(*countInstrEnd)++;
+					}
 				}
 			}
 		}
@@ -172,7 +187,7 @@ void Parser::checkTokens(tToken *token, int *countInstrEnd)
 			{
 				if (token->valueType == i->type)
 				{
-					i->func(token);
+					(this->*i->func)(token);
 				}
 			}
 		}
@@ -181,15 +196,15 @@ void Parser::checkTokens(tToken *token, int *countInstrEnd)
 	{
 		std::cerr << e.what() << std::endl;
 		if (token->right)
-			identifyTokens(token->right);
+			checkTokens(token->right, countInstrEnd);
 		else if(token->down)
-			identifyTokens(token->down);
+			checkTokens(token->down, countInstrEnd);
 		throw;
 	}
 	if (token->right)
-		checkTokens(token->right);
+		checkTokens(token->right, countInstrEnd);
 	else if(token->down)
-		checkTokens(token->down);
-	//std::cout << token->line << token->data << std::endl << "    [type: " << token->type << " value: " << token->valueType << " instr: " << token->instrType << "]"<<std::endl;
+		checkTokens(token->down, countInstrEnd);
+
 }
 

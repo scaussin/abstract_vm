@@ -38,7 +38,7 @@ class Parser {
 		std::vector<tCheckInstr> _checkInstr;
 		std::string _endInst;
 	private :
-		void checkTokens(tToken *);
+		void checkTokens(tToken *, int *);
 		void initCheckVector();
 
 		void checkInt8(tToken *);

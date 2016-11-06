@@ -103,6 +103,7 @@ void Lexer::vectorToToken(std::vector<std::string> data)
 
 void Lexer::identifyTokens(tToken *token)
 {
+	// std::cout << token->line << token->data << std::endl << "    [type: " << token->type << " value: " << token->valueType << " instr: " << token->instrType << "]"<<std::endl;
 	for (std::vector<tMatchInstr>::iterator i = _matchInstr.begin(); i != _matchInstr.end(); ++i)
 	{
 		if (std::regex_match(token->data, i->regex))
@@ -133,7 +134,6 @@ void Lexer::identifyTokens(tToken *token)
 			identifyTokens(token->down);
 		throw;
 	}
-	//std::cout << token->line << token->data << std::endl << "    [type: " << token->type << " value: " << token->valueType << " instr: " << token->instrType << "]"<<std::endl;
 	if (token->right)
 		identifyTokens(token->right);
 	else if(token->down)

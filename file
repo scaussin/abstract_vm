@@ -1,8 +1,7 @@
-;ss
-push Int32(20)
 push Int8(50)
-push Double(0.50)
-dump;comcom
-;comcomcom
-push;comcom
- 
+push Int8(50)
+push Double(0.50);
+;
+add add
+mul
+exit
