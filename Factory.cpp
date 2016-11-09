@@ -9,7 +9,7 @@ Factory::Factory(tToken * tokens) : _tokens(tokens)
 	_mapFactoryOperand[eInt8] = &Factory::createInt8;
 	_mapFactoryOperand[eInt16] = &Factory::createInt16;
 	_mapFactoryOperand[eInt32] = &Factory::createInt32;
-	_mapFactoryOperand[eFoat] = &Factory::createFloat;
+	_mapFactoryOperand[eFloat] = &Factory::createFloat;
 	_mapFactoryOperand[eDouble] = &Factory::createDouble;
 }
 
@@ -31,7 +31,9 @@ Factory &Factory::operator=(Factory const &rhs)
 IOperand const * Factory::createOperand( eOperandType type, std::string const & value ) const
 {
 	//(this->*i->func)(token);
-	return(this->*_mapFactoryOperand[type](value));
+	IOperand const * res = NULL;
+	res = (this->*_mapFactoryOperand[type])(value);
+	return(res);
 }
 
 IOperand const * Factory::createInt8( std::string const & value ) const
