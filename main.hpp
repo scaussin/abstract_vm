@@ -18,6 +18,15 @@ enum eValueType
 	ValueDouble
 };
 
+enum eOperandType
+{
+	eInt8 = 0,
+	eInt16,
+	eInt32,
+	eFloat,
+	eDouble
+};
+
 enum eInstrType
 {
 	InstrNone,
@@ -34,16 +43,16 @@ enum eInstrType
 	InstrExit
 };
 
-typedef struct	eToken
+struct tToken
 {
 	std::string data;
 	int line;
 	eTokenType type;
 	eValueType valueType;
 	eInstrType instrType;
-	struct eToken *down;
-	struct eToken *right;
-	struct eToken *left;
-}				tToken;
+	tToken *down;
+	tToken *right;
+	tToken *left;
+};
 
 #endif

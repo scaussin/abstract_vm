@@ -33,6 +33,9 @@ Parser::~Parser()
 Parser &Parser::operator=(Parser const &rhs)
 {
 	_tokens = rhs._tokens;
+	_checkValue = rhs._checkValue;
+	_checkInstr = rhs._checkInstr;
+	_endInst = rhs._endInst;
 	return (*this);
 }
 
@@ -205,6 +208,5 @@ void Parser::checkTokens(tToken *token, int *countInstrEnd)
 		checkTokens(token->right, countInstrEnd);
 	else if(token->down)
 		checkTokens(token->down, countInstrEnd);
-
 }
 
