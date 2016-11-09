@@ -7,6 +7,7 @@
 #include "AbstractException.hpp"
 #include "main.hpp"
 #include "IOperand.hpp"
+#include "TOperand.hpp"
 
 class Factory {
 
@@ -19,6 +20,7 @@ class Factory {
 		tToken *_tokens;
 		IOperand const * createOperand( eOperandType type, std::string const & value ) const;
 		std::map<eOperandType, IOperand const * (Factory::*)( std::string const & value ) const> _mapFactoryOperand;
+        std::map<char, int> map;
 
 	private :
 		IOperand const * createInt8( std::string const & value ) const;
