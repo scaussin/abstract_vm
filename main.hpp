@@ -20,7 +20,7 @@ enum eValueType
 
 enum eOperandType
 {
-	eInt8 = 0,
+	eInt8,
 	eInt16,
 	eInt32,
 	eFloat,

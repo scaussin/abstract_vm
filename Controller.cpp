@@ -1,5 +1,7 @@
 #include "Controller.hpp"
 
+Factory iOperandFactory;
+
 Controller::Controller()
 {
 }

@@ -8,6 +8,7 @@
 #include <iostream>
 #include <fstream>
 #include "Lexer.hpp"
+#include "Factory.hpp"
 #include "Parser.hpp"
 #include "AbstractException.hpp"
 

@@ -1,5 +1,5 @@
-#ifndef INT8_HPP
-# define INT8_HPP
+#ifndef TOPERAND_HPP
+# define TOPERAND_HPP
 
 #include <string>
 #include <vector>
@@ -7,15 +7,19 @@
 #include "IOperand.hpp"
 #include "main.hpp"
 
-class Int8 : public IOperand {
+extern iOperandFactory; 
+
+template<typename T> 
+class TOperand : public IOperand {
 
 	public :
-		Int8();
-		Int8(int8_t);
-		Int8(Int8 const &);
-		Int8 &operator=(Int8 const &rhs);
-		~Int8();
-		int8_t _value;
+		TOperand();
+		TOperand(T);
+		TOperand(TOperand const &);
+		TOperand &operator=(TOperand const &rhs);
+		~TOperand();
+		eOperandType _type;
+		T _value;
 		std::string _toString;
 
 		virtual int getPrecision( void ) const;
@@ -26,6 +30,7 @@ class Int8 : public IOperand {
 		virtual IOperand const * operator/( IOperand const & rhs ) const;
 		virtual IOperand const * operator%( IOperand const & rhs ) const;
 		virtual std::string const & toString( void ) const;
+		virtual ~IOperand( void );
 
 	private :
 
