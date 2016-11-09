@@ -7,7 +7,7 @@
 #include "IOperand.hpp"
 #include "main.hpp"
 
-class Int8 : public IOperand{
+class Int8 : public IOperand {
 
 	public :
 		Int8();

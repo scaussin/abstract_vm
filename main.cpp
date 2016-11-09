@@ -4,6 +4,7 @@ int	main(int ac, char **av)
 {
 	Controller controller;
 	std::ifstream *in;
+
 	if (ac == 2)
 	{
 		in = new std::ifstream();
