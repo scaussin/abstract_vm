@@ -14,13 +14,6 @@
 #include <exception>
 #include <map>
 
-#include "AbstractException.hpp"
-#include "Lexer.hpp"
-#include "Factory.hpp"
-#include "Parser.hpp"
-#include "TOperand.hpp"
-#include "IOperand.hpp"
-
 enum eTokenType
 {
 	err,
@@ -74,5 +67,21 @@ struct tToken
 	tToken *right;
 	tToken *left;
 };
+
+/*class AbstractException;
+class Lexer;
+class Factory;
+class Parser;
+class TOperand;
+class IOperand;*/
+
+#include "Controller.hpp"
+#include "Lexer.hpp"
+#include "Parser.hpp"
+#include "AbstractException.hpp"
+#include "IOperand.hpp"
+#include "Factory.hpp"
+#include "TOperand.hpp"
+
 
 #endif

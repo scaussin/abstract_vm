@@ -14,7 +14,6 @@ class Factory {
 		tToken *_tokens;
 		IOperand const * createOperand( eOperandType type, std::string const & value ) const;
 		IOperand const * (Factory::*_tabFactoryOperand[5])( std::string const & value ) const ;
-        std::map<char, int> mapt;
 
 	private :
 		IOperand const * createInt8( std::string const & value ) const;
