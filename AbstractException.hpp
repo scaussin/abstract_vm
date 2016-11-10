@@ -1,8 +1,7 @@
 #ifndef ABSTRACTEXCEPTION_HPP
 # define ABSTRACTEXCEPTION_HPP
 
-#include <exception>
-#include <string>
+#include "main.hpp"
 
 class AbstractException: public std::exception {
 

@@ -1,5 +1,4 @@
-#include "Factory.hpp"
-#include <iostream>
+#include "main.hpp"
 
 Factory::Factory()
 {
@@ -7,13 +6,13 @@ Factory::Factory()
 
 Factory::Factory(tToken * tokens) : _tokens(tokens)
 {
-	_mapFactoryOperand[eInt8] = &Factory::createInt8;
-	_mapFactoryOperand[eInt16] = &Factory::createInt16;
-	_mapFactoryOperand[eInt32] = &Factory::createInt32;
-	_mapFactoryOperand[eFloat] = &Factory::createFloat;
-	_mapFactoryOperand[eDouble] = &Factory::createDouble;
-    /*map['c'] = 5;
-    std::cout <<  map['c'] ;*/
+	_tabFactoryOperand[eInt8] = &Factory::createInt8;
+	/*_tabFactoryOperand[eInt16] = &Factory::createInt16;
+	_tabFactoryOperand[eInt32] = &Factory::createInt32;
+	_tabFactoryOperand[eFloat] = &Factory::createFloat;
+	_tabFactoryOperand[eDouble] = &Factory::createDouble;*/
+    /*mapt['c'] = 5;
+    std::cout <<  mapt['c'] ;*/
 
 }
 
@@ -36,10 +35,7 @@ IOperand const * Factory::createOperand( eOperandType type, std::string const & 
 {
 	(void)type;
 	(void)value;
-	//(this->*i->func)(token);
-	/*IOperand const * res = NULL;
-	res = (this->*_mapFactoryOperand[(int)type])(value);*/
-	return(new TOperand<int8_t>(0));
+	return ((this->*_tabFactoryOperand[(int)type])(value));
 }
 
 IOperand const * Factory::createInt8( std::string const & value ) const
@@ -48,7 +44,7 @@ IOperand const * Factory::createInt8( std::string const & value ) const
     (void)value;
 	return (new TOperand<int8_t>(0));
 }
-
+/*
 IOperand const * Factory::createInt16( std::string const & value ) const
 {
     (void)value;
@@ -71,4 +67,4 @@ IOperand const * Factory::createDouble( std::string const & value ) const
 {
     (void)value;
 	return (new TOperand<double>(0));
-}
+}*/

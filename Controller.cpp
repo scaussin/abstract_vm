@@ -1,7 +1,8 @@
-#include "Controller.hpp"
+#include "main.hpp"
 
-Factory iOperandFactory;
+//Factory iOperandFactory;
 
+int o;
 Controller::Controller()
 {
 }

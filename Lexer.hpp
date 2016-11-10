@@ -1,15 +1,7 @@
 #ifndef LEXER_HPP
 # define LEXER_HPP
 
-#include <string>
-#include <vector>
-#include <iostream>
-#include <cstring>
-#include <sstream>
-#include <regex>
-#include <iomanip>
 #include "main.hpp"
-#include "AbstractException.hpp"
 
 typedef struct	sMatchInstr
 {

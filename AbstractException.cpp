@@ -1,4 +1,4 @@
-#include "AbstractException.hpp"
+#include "main.hpp"
 
 AbstractException::AbstractException()
 {

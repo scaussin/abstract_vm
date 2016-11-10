@@ -1,6 +1,26 @@
 #ifndef MAIN_HPP
 # define MAIN_HPP
 
+#define END_STDIN ";;"
+
+#include <string>
+#include <vector>
+#include <iostream>
+#include <cstring>
+#include <sstream>
+#include <regex>
+#include <iomanip>
+#include <fstream>
+#include <exception>
+#include <map>
+
+#include "AbstractException.hpp"
+#include "Lexer.hpp"
+#include "Factory.hpp"
+#include "Parser.hpp"
+#include "TOperand.hpp"
+#include "IOperand.hpp"
+
 enum eTokenType
 {
 	err,

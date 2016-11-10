@@ -1,11 +1,7 @@
 #ifndef PARSER_HPP
 # define PARSER_HPP
 
-#include <string>
-#include <vector>
-#include "Lexer.hpp"
 #include "main.hpp"
-#include "AbstractException.hpp"
 
 class Parser {
 	public :
