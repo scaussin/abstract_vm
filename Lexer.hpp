@@ -1,8 +1,6 @@
 #ifndef LEXER_HPP
 # define LEXER_HPP
 
-#include "main.hpp"
-
 typedef struct	sMatchInstr
 {
 	std::regex regex;

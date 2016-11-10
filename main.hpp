@@ -13,6 +13,8 @@
 #include <fstream>
 #include <exception>
 #include <map>
+#include <deque>
+
 
 enum eTokenType
 {
@@ -82,6 +84,7 @@ class IOperand;*/
 #include "IOperand.hpp"
 #include "Factory.hpp"
 #include "TOperand.hpp"
+#include "Vm.hpp"
 
 
 #endif

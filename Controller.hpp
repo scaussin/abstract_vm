@@ -1,8 +1,6 @@
 #ifndef CONTROLLER_HPP
 # define CONTROLLER_HPP
 
-#include "main.hpp"
-
 class Controller {
 
 	public :

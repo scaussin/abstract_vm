@@ -2,10 +2,6 @@
 
 Factory::Factory()
 {
-}
-
-Factory::Factory(tToken * tokens) : _tokens(tokens)
-{
 	_tabFactoryOperand[eInt8] = &Factory::createInt8;
 	/*_tabFactoryOperand[eInt16] = &Factory::createInt16;
 	_tabFactoryOperand[eInt32] = &Factory::createInt32;
@@ -13,7 +9,6 @@ Factory::Factory(tToken * tokens) : _tokens(tokens)
 	_tabFactoryOperand[eDouble] = &Factory::createDouble;*/
     /*mapt['c'] = 5;
     std::cout <<  mapt['c'] ;*/
-
 }
 
 Factory::Factory(Factory const &rhs)
@@ -27,7 +22,7 @@ Factory::~Factory()
 
 Factory &Factory::operator=(Factory const &rhs)
 {
-	_tokens = rhs._tokens;
+	(void)rhs;
 	return (*this);
 }
 

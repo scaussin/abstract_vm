@@ -1,8 +1,6 @@
 #ifndef TOPERAND_HPP
 # define TOPERAND_HPP
 
-#include "main.hpp"
-
 extern Factory iOperandFactory;
 
 template<class T>
@@ -20,7 +18,7 @@ class TOperand : public IOperand {
 
 		virtual int getPrecision( void ) const;
 		virtual eOperandType getType( void ) const;
-		virtual IOperand const * operator+( IOperand const & rhs ) const;
+		IOperand const * operator+( IOperand const & rhs ) const;
 		/*virtual IOperand const * operator-( IOperand const & rhs ) const;
 		virtual IOperand const * operator*( IOperand const & rhs ) const;
 		virtual IOperand const * operator/( IOperand const & rhs ) const;
@@ -34,7 +32,7 @@ class TOperand : public IOperand {
 
 template <typename T>
 TOperand<T>::TOperand()
-{
+{	
 }
 
 template <typename T>
@@ -63,8 +61,8 @@ IOperand & TOperand<T>::operator=(TOperand const &rhs)
 template <typename T>
 IOperand const * TOperand<T>::operator+( IOperand const & rhs ) const
 {
-	(void)rhs;
-	return (iOperandFactory.createOperand(_type, std::string("1")));
+	TOperand const & ee = dynamic_cast<TOperand const &>(rhs);
+	return (iOperandFactory.createOperand(_type, std::to_string(_value + ee._value)));
 }
 
 template <typename T>

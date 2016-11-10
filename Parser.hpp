@@ -1,8 +1,6 @@
 #ifndef PARSER_HPP
 # define PARSER_HPP
 
-#include "main.hpp"
-
 class Parser {
 	public :
 		Parser();

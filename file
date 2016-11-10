@@ -1,7 +1,4 @@
-push	Int8(50)
-push Int8(50)
-push Double(0.50);
-;
-add add
-mul
+push Int8(5)
+push Int8(4)
+add
 exit
