@@ -26,41 +26,42 @@ Factory &Factory::operator=(Factory const &rhs)
 	return (*this);
 }
 
-IOperand const * Factory::createOperand( eOperandType type, std::string const & value ) const
+IOperand const * Factory::createOperand(eOperandType type, std::string const & value) const
 {
 	(void)type;
 	(void)value;
 	return ((this->*_tabFactoryOperand[(int)type])(value));
 }
 
-IOperand const * Factory::createInt8( std::string const & value ) const
+IOperand const * Factory::createInt8(std::string const & value) const
 {
-	
-//	int8_t i = (int8_t)std::stoi(value);
-	int i = std::stoi(value);
-    (void)value;
-	return (new TOperand<int8_t>(i));
+    int result = std::stoi(value, NULL, 10);
+    if (result > 127)
+        throw AbstractException("int8_t overflow");
+    if (result < -127)
+        throw AbstractException("int8_t underflow");
+	return (new TOperand<int8_t>(eInt8, result));
 }
 /*
-IOperand const * Factory::createInt16( std::string const & value ) const
+IOperand const * Factory::createInt16(std::string const & value) const
 {
     (void)value;
 	return (new TOperand<int16_t>(0));
 }
 
-IOperand const * Factory::createInt32( std::string const & value ) const
+IOperand const * Factory::createInt32(std::string const & value) const
 {
     (void)value;
 	return (new TOperand<int32_t>(0));
 }
 
-IOperand const * Factory::createFloat( std::string const & value ) const
+IOperand const * Factory::createFloat(std::string const & value) const
 {
     (void)value;
 	return (new TOperand<float>(0));
 }
 
-IOperand const * Factory::createDouble( std::string const & value ) const
+IOperand const * Factory::createDouble(std::string const & value) const
 {
     (void)value;
 	return (new TOperand<double>(0));

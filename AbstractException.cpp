@@ -1,5 +1,6 @@
 #include "main.hpp"
 
+
 AbstractException::AbstractException()
 {
 }
@@ -27,3 +28,6 @@ AbstractException &AbstractException::operator=(AbstractException const &rhs)
 	_msg = rhs._msg;
 	return (*this);
 }
+/*
+AbstractException::AbstractException(const std::string& what_arg)
+{}*/

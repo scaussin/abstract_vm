@@ -14,7 +14,7 @@
 #include <exception>
 #include <map>
 #include <deque>
-
+#include <stdexcept>
 
 enum eTokenType
 {

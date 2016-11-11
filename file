@@ -1,4 +1,4 @@
-push Int8(5)
-push Int8(4)
-add
+push Int8(0)
+push Int8(49)
+mod
 exit

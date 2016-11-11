@@ -18,9 +18,14 @@ class Vm {
 
 	private :
 		void execute(tToken *);
+		void checkArithmeticInstr(tToken *);
 		void instrPush(tToken *);
 		void instrAdd(tToken *);
 		void instrExit(tToken *);
+		void instrSub(tToken *);
+		void instrMul(tToken *);
+		void instrDiv(tToken *);
+		void instrMod(tToken *);
 };
 
 #endif

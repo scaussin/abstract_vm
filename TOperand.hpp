@@ -8,7 +8,7 @@ class TOperand : public IOperand {
 
 	public :
 		TOperand();
-		TOperand(T);
+		TOperand(eOperandType, T);
 		TOperand(TOperand const &);
 		IOperand &operator=(TOperand const &rhs);
 		~TOperand();
@@ -18,13 +18,13 @@ class TOperand : public IOperand {
 
 		virtual int getPrecision( void ) const;
 		virtual eOperandType getType( void ) const;
-		IOperand const * operator+( IOperand const & rhs ) const;
-		/*virtual IOperand const * operator-( IOperand const & rhs ) const;
+		virtual IOperand const * operator+( IOperand const & rhs ) const;
+		virtual IOperand const * operator-( IOperand const & rhs ) const;
 		virtual IOperand const * operator*( IOperand const & rhs ) const;
 		virtual IOperand const * operator/( IOperand const & rhs ) const;
-		virtual IOperand const * operator%( IOperand const & rhs ) const;*/
+		virtual IOperand const * operator%( IOperand const & rhs ) const;
 		virtual std::string const & toString( void ) const;
-        //virtual ~IOperand( void ) {}
+        // virtual ~IOperand( void ) {}
 
 	private :
 
@@ -32,7 +32,7 @@ class TOperand : public IOperand {
 
 template <typename T>
 TOperand<T>::TOperand()
-{	
+{
 }
 
 template <typename T>
@@ -42,8 +42,9 @@ TOperand<T>::TOperand(TOperand const &rhs)
 }
 
 template <class T>
-TOperand<T>::TOperand(T value) : _value(value)
+TOperand<T>::TOperand(eOperandType type, T value) : _value(value)
 {
+	_type = type;
 	_toString = "TOperand";
 }
 
@@ -60,8 +61,35 @@ template <typename T>
 IOperand const * TOperand<T>::operator+( IOperand const & rhs ) const
 {
 	TOperand const & ee = dynamic_cast<TOperand const &>(rhs);
-	std::cout << _value << " + " << ee._value << std::endl;
 	return (iOperandFactory.createOperand(_type, std::to_string(_value + ee._value)));
+}
+
+template <typename T>
+IOperand const * TOperand<T>::operator-( IOperand const & rhs ) const
+{
+	TOperand const & ee = dynamic_cast<TOperand const &>(rhs);
+	return (iOperandFactory.createOperand(_type, std::to_string(_value - ee._value)));
+}
+
+template <typename T>
+IOperand const * TOperand<T>::operator/( IOperand const & rhs ) const
+{
+	TOperand const & ee = dynamic_cast<TOperand const &>(rhs);
+	return (iOperandFactory.createOperand(_type, std::to_string(_value / ee._value)));
+}
+
+template <typename T>
+IOperand const * TOperand<T>::operator*( IOperand const & rhs ) const
+{
+	TOperand const & ee = dynamic_cast<TOperand const &>(rhs);
+	return (iOperandFactory.createOperand(_type, std::to_string(_value * ee._value)));
+}
+
+template <typename T>
+IOperand const * TOperand<T>::operator%( IOperand const & rhs ) const
+{
+	TOperand const & ee = dynamic_cast<TOperand const &>(rhs);
+	return (iOperandFactory.createOperand(_type, std::to_string(_value % ee._value)));
 }
 
 template <typename T>
