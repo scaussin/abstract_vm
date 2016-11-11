@@ -24,10 +24,11 @@ Vm::Vm(tToken *tokens) : _tokens(tokens)
 	_tabInstr[InstrDiv] = &Vm::instrDiv;
 	_tabInstr[InstrMod] = &Vm::instrMod;
 	_tabInstr[InstrPrint] = &Vm::instrPrint;*/
-	IOperand const * item = _stack.front();
 	execute(_tokens);
-	TOperand  const *ee = dynamic_cast<TOperand const *>(item);
-	std::cout << ee->_value << std::endl;
+	IOperand const * item = _stack.front();
+	(void)item;
+	/*TOperand  const *ee = dynamic_cast<TOperand const *>(item);
+	std::cout << ee->_value << std::endl;*/
 }
 
 Vm::Vm(Vm const &rhs)

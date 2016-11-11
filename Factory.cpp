@@ -35,9 +35,11 @@ IOperand const * Factory::createOperand( eOperandType type, std::string const & 
 
 IOperand const * Factory::createInt8( std::string const & value ) const
 {
-	//Int8_t i = 0;
+	
+//	int8_t i = (int8_t)std::stoi(value);
+	int i = std::stoi(value);
     (void)value;
-	return (new TOperand<int8_t>(0));
+	return (new TOperand<int8_t>(i));
 }
 /*
 IOperand const * Factory::createInt16( std::string const & value ) const

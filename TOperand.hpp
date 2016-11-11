@@ -56,12 +56,11 @@ IOperand & TOperand<T>::operator=(TOperand const &rhs)
 	return (this);
 }
 
-//Factory iOperandFactory;
-
 template <typename T>
 IOperand const * TOperand<T>::operator+( IOperand const & rhs ) const
 {
 	TOperand const & ee = dynamic_cast<TOperand const &>(rhs);
+	std::cout << _value << " + " << ee._value << std::endl;
 	return (iOperandFactory.createOperand(_type, std::to_string(_value + ee._value)));
 }
 

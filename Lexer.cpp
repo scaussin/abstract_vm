@@ -52,11 +52,11 @@ void Lexer::initMatchVector()
 	_matchInstr.push_back(sMatchInstr(std::regex("^exit$"), InstrExit));
 	_matchInstr.push_back(sMatchInstr(std::regex("^;;$"), InstrExit));
 
-	_matchValue.push_back(sMatchValue(std::regex("^Int8\\(-?[0-9]+\\)$"), ValueInt8));
-	_matchValue.push_back(sMatchValue(std::regex("^Int16\\(-?[0-9]+\\)$"), ValueInt16));
-	_matchValue.push_back(sMatchValue(std::regex("^Int32\\(-?[0-9]+\\)$"), ValueInt32));
-	_matchValue.push_back(sMatchValue(std::regex("^Float\\(-?\\d+\\.{1}\\d+\\)$"), ValueFloat));
-	_matchValue.push_back(sMatchValue(std::regex("^Double\\(-?\\d+\\.{1}\\d+\\)$"), ValueDouble));
+	_matchValue.push_back(sMatchValue(std::regex("^Int8\\((-?[0-9]+)\\)$"), ValueInt8));
+	_matchValue.push_back(sMatchValue(std::regex("^Int16\\((-?[0-9]+)\\)$"), ValueInt16));
+	_matchValue.push_back(sMatchValue(std::regex("^Int32\\((-?[0-9]+)\\)$"), ValueInt32));
+	_matchValue.push_back(sMatchValue(std::regex("^Float\\((-?\\d+\\.{1}\\d+)\\)$"), ValueFloat));
+	_matchValue.push_back(sMatchValue(std::regex("^Double\\((-?\\d+\\.{1}\\d+)\\)$"), ValueDouble));
 }
 
 void Lexer::vectorToToken(std::vector<std::string> data)
@@ -114,10 +114,12 @@ void Lexer::identifyTokens(tToken *token)
 	}
 	for (std::vector<tMatchValue>::iterator i = _matchValue.begin(); i != _matchValue.end(); ++i)
 	{
-		if (std::regex_match(token->data, i->regex))
+		std::smatch match;
+		if (std::regex_search(token->data, match, i->regex))
 		{
 			token->type = val;
 			token->valueType = i->type;
+			token->data = match[1];
 		}
 	}
 	try
