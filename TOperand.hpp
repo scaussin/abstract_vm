@@ -3,7 +3,7 @@
 
 extern Factory iOperandFactory;
 
-template<class T>
+template<typename T>
 class TOperand : public IOperand {
 
 	public :
@@ -11,6 +11,7 @@ class TOperand : public IOperand {
 		TOperand(eOperandType, T);
 		TOperand(TOperand const &);
 		IOperand &operator=(TOperand const &rhs);
+		//bool operator==(IOperand const & rhs );
 		~TOperand();
 		eOperandType _type;
 		T _value;
@@ -30,7 +31,7 @@ class TOperand : public IOperand {
 
 };
 
-template <typename T>
+template<typename T>
 TOperand<T>::TOperand()
 {
 }
@@ -41,7 +42,7 @@ TOperand<T>::TOperand(TOperand const &rhs)
 	*this = rhs;
 }
 
-template <class T>
+template <typename T>
 TOperand<T>::TOperand(eOperandType type, T value) : _value(value)
 {
 	_type = type;
@@ -56,40 +57,169 @@ IOperand & TOperand<T>::operator=(TOperand const &rhs)
 	_value = rhs._value;
 	return (this);
 }
+/*
+template <typename T>
+bool TOperand<T>::operator==(IOperand const & rhs )
+{
+TOperand const & ee = dynamic_cast<TOperand const &>(rhs);
+	if (ee._value == _value)
+		return (true);
+	return (false);
+}*/
 
 template <typename T>
 IOperand const * TOperand<T>::operator+( IOperand const & rhs ) const
 {
-	TOperand const & ee = dynamic_cast<TOperand const &>(rhs);
-	return (iOperandFactory.createOperand(_type, std::to_string(_value + ee._value)));
+	try {
+		TOperand<int8_t> const & right = dynamic_cast<TOperand<int8_t> const &>(rhs);
+		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string(_value + right._value)));
+	}
+	catch(const std::bad_cast& e) {}
+	try {
+		TOperand<int16_t> const & right = dynamic_cast<TOperand<int16_t> const &>(rhs);
+		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string(_value + right._value)));
+	}
+	catch(const std::bad_cast& e) {}
+	try {
+		TOperand<int32_t> const & right = dynamic_cast<TOperand<int32_t> const &>(rhs);
+		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string(_value + right._value)));
+	}
+	catch(const std::bad_cast& e) {}
+	try {
+		TOperand<float> const & right = dynamic_cast<TOperand<float> const &>(rhs);
+		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string(_value + right._value)));
+	}
+	catch(const std::bad_cast& e) {}
+	try {
+		TOperand<double> const & right = dynamic_cast<TOperand<double> const &>(rhs);
+		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string(_value + right._value)));
+	}
+	catch(const std::bad_cast& e) {}
+	return (iOperandFactory.createOperand(eInt8, "0"));
 }
 
 template <typename T>
 IOperand const * TOperand<T>::operator-( IOperand const & rhs ) const
 {
-	TOperand const & ee = dynamic_cast<TOperand const &>(rhs);
-	return (iOperandFactory.createOperand(_type, std::to_string(_value - ee._value)));
+	try {
+		TOperand<int8_t> const & right = dynamic_cast<TOperand<int8_t> const &>(rhs);
+		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string(_value - right._value)));
+	}
+	catch(const std::bad_cast& e) {}
+	try {
+		TOperand<int16_t> const & right = dynamic_cast<TOperand<int16_t> const &>(rhs);
+		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string(_value - right._value)));
+	}
+	catch(const std::bad_cast& e) {}
+	try {
+		TOperand<int32_t> const & right = dynamic_cast<TOperand<int32_t> const &>(rhs);
+		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string(_value - right._value)));
+	}
+	catch(const std::bad_cast& e) {}
+	try {
+		TOperand<float> const & right = dynamic_cast<TOperand<float> const &>(rhs);
+		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string(_value - right._value)));
+	}
+	catch(const std::bad_cast& e) {}
+	try {
+		TOperand<double> const & right = dynamic_cast<TOperand<double> const &>(rhs);
+		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string(_value - right._value)));
+	}
+	catch(const std::bad_cast& e) {}
+	return (iOperandFactory.createOperand(eInt8, "0"));
 }
 
 template <typename T>
 IOperand const * TOperand<T>::operator/( IOperand const & rhs ) const
 {
-	TOperand const & ee = dynamic_cast<TOperand const &>(rhs);
-	return (iOperandFactory.createOperand(_type, std::to_string(_value / ee._value)));
+		try {
+		TOperand<int8_t> const & right = dynamic_cast<TOperand<int8_t> const &>(rhs);
+		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string(_value / right._value)));
+	}
+	catch(const std::bad_cast& e) {}
+	try {
+		TOperand<int16_t> const & right = dynamic_cast<TOperand<int16_t> const &>(rhs);
+		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string(_value / right._value)));
+	}
+	catch(const std::bad_cast& e) {}
+	try {
+		TOperand<int32_t> const & right = dynamic_cast<TOperand<int32_t> const &>(rhs);
+		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string(_value / right._value)));
+	}
+	catch(const std::bad_cast& e) {}
+	try {
+		TOperand<float> const & right = dynamic_cast<TOperand<float> const &>(rhs);
+		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string(_value / right._value)));
+	}
+	catch(const std::bad_cast& e) {}
+	try {
+		TOperand<double> const & right = dynamic_cast<TOperand<double> const &>(rhs);
+		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string(_value / right._value)));
+	}
+	catch(const std::bad_cast& e) {}
+	return (iOperandFactory.createOperand(eInt8, "0"));
 }
 
 template <typename T>
 IOperand const * TOperand<T>::operator*( IOperand const & rhs ) const
 {
-	TOperand const & ee = dynamic_cast<TOperand const &>(rhs);
-	return (iOperandFactory.createOperand(_type, std::to_string(_value * ee._value)));
+	try {
+		TOperand<int8_t> const & right = dynamic_cast<TOperand<int8_t> const &>(rhs);
+		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string(_value * right._value)));
+	}
+	catch(const std::bad_cast& e) {}
+	try {
+		TOperand<int16_t> const & right = dynamic_cast<TOperand<int16_t> const &>(rhs);
+		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string(_value * right._value)));
+	}
+	catch(const std::bad_cast& e) {}
+	try {
+		TOperand<int32_t> const & right = dynamic_cast<TOperand<int32_t> const &>(rhs);
+		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string(_value * right._value)));
+	}
+	catch(const std::bad_cast& e) {}
+	try {
+		TOperand<float> const & right = dynamic_cast<TOperand<float> const &>(rhs);
+		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string(_value * right._value)));
+	}
+	catch(const std::bad_cast& e) {}
+	try {
+		TOperand<double> const & right = dynamic_cast<TOperand<double> const &>(rhs);
+		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string(_value * right._value)));
+	}
+	catch(const std::bad_cast& e) {}
+	return (iOperandFactory.createOperand(eInt8, "0"));
 }
 
 template <typename T>
 IOperand const * TOperand<T>::operator%( IOperand const & rhs ) const
 {
-	TOperand const & ee = dynamic_cast<TOperand const &>(rhs);
-	return (iOperandFactory.createOperand(_type, std::to_string(_value % ee._value)));
+	try {
+		TOperand<int8_t> const & right = dynamic_cast<TOperand<int8_t> const &>(rhs);
+		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string((int)_value % (int)right._value)));
+	}
+	catch(const std::bad_cast& e) {}
+	try {
+		TOperand<int16_t> const & right = dynamic_cast<TOperand<int16_t> const &>(rhs);
+		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string((int)_value % (int)right._value)));
+	}
+	catch(const std::bad_cast& e) {}
+	try {
+		TOperand<int32_t> const & right = dynamic_cast<TOperand<int32_t> const &>(rhs);
+		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string((int)_value % (int)right._value)));
+	}
+	catch(const std::bad_cast& e) {}
+	try {
+		TOperand<float> const & right = dynamic_cast<TOperand<float> const &>(rhs);
+		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string((int)_value % (int)right._value)));
+	}
+	catch(const std::bad_cast& e) {}
+	try {
+		TOperand<double> const & right = dynamic_cast<TOperand<double> const &>(rhs);
+		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string((int)_value % (int)right._value)));
+	}
+	catch(const std::bad_cast& e) {}
+	return (iOperandFactory.createOperand(eInt8, "0"));
 }
 
 template <typename T>

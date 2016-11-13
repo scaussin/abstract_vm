@@ -18,14 +18,20 @@ class Vm {
 
 	private :
 		void execute(tToken *);
-		void checkArithmeticInstr(tToken *);
+
 		void instrPush(tToken *);
-		void instrAdd(tToken *);
+		void instrPop(tToken *);
+		void instrDump(tToken *);
 		void instrExit(tToken *);
+
+		void instrAdd(tToken *);
 		void instrSub(tToken *);
 		void instrMul(tToken *);
 		void instrDiv(tToken *);
 		void instrMod(tToken *);
+
+		void checkArithmeticInstr(tToken *);
+        void checkDivisionByZero(tToken *token);
 };
 
 #endif

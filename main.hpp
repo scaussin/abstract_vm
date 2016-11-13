@@ -15,6 +15,8 @@
 #include <map>
 #include <deque>
 #include <stdexcept>
+#include <algorithm>
+#include <typeinfo>
 
 enum eTokenType
 {

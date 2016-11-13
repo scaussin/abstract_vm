@@ -1,4 +1,3 @@
-push Int8(0)
-push Int8(49)
-mod
+;add
+dump
 exit

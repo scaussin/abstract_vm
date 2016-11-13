@@ -22,9 +22,9 @@ Vm::Vm(tToken *tokens) : _tokens(tokens)
 	_tabInstr[InstrMod] = &Vm::instrMod;
 
 	_tabInstr[InstrExit] = &Vm::instrExit;
-	/*_tabInstr[InstrPop] = &Vm::instrPop;
+	_tabInstr[InstrPop] = &Vm::instrPop;
 	_tabInstr[InstrDump] = &Vm::instrDump;
-	_tabInstr[InstrAssert] = &Vm::instrAssert;
+	/*_tabInstr[InstrAssert] = &Vm::instrAssert;
 	_tabInstr[InstrPrint] = &Vm::instrPrint;*/
 	try
 	{
@@ -35,8 +35,8 @@ Vm::Vm(tToken *tokens) : _tokens(tokens)
 		std::cerr << e.what() << std::endl;
 		throw;
 	}
-	IOperand const * item = _stack.front();
-	(void)item;
+	//IOperand const * item = _stack.front();
+//	(void)item;
 	/*TOperand  const *ee = dynamic_cast<TOperand const *>(item);
 	std::cout << ee->_value << std::endl;*/
 }
@@ -93,6 +93,7 @@ void Vm::instrMul(tToken *token)
 void Vm::instrDiv(tToken *token)
 {
 	checkArithmeticInstr(token);
+	checkDivisionByZero(token);
 	IOperand const *res = (*_stack[0] / *_stack[1]);
 	_stack.pop_front();
 	_stack.pop_front();
@@ -102,22 +103,94 @@ void Vm::instrDiv(tToken *token)
 void Vm::instrMod(tToken *token)
 {
 	checkArithmeticInstr(token);
+	checkDivisionByZero(token);
 
- 	TOperand<int8_t> const & divider = dynamic_cast<TOperand<int8_t> const &>(*_stack[1]);
- 	if (divider._value == 0)
- 		throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Division by zero\n\t" + token->data));
 	IOperand const *res = (*_stack[0] % *_stack[1]);
 	_stack.pop_front();
 	_stack.pop_front();
 	_stack.push_front(res);
 }
 
+void Vm::instrPop(tToken *token)
+{
+	if (_stack.size() == 0)
+		throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Instruction pop on an empty stack\n\t" + token->data));
+	_stack.pop_front();
+}
+
+void Vm::instrDump(tToken *token)
+{
+	(void)token;
+	size_t i = 0;
+	while (i < _stack.size())
+	{
+		try {
+			TOperand<int8_t> const & divider = dynamic_cast<TOperand<int8_t> const &>(*_stack[i]);
+			std::cout << (int)divider._value << std::endl;
+		}
+		catch(const std::bad_cast& e) {}
+			try {
+			TOperand<int16_t> const & divider = dynamic_cast<TOperand<int16_t> const &>(*_stack[i]);
+			std::cout << divider._value << std::endl;
+		}
+		catch(const std::bad_cast& e) {}
+			try {
+			TOperand<int32_t> const & divider = dynamic_cast<TOperand<int32_t> const &>(*_stack[i]);
+			std::cout << divider._value << std::endl;
+		}
+		catch(const std::bad_cast& e) {}
+			try {
+			TOperand<float> const & divider = dynamic_cast<TOperand<float> const &>(*_stack[i]);
+			std::cout << divider._value << std::endl;
+		}
+		catch(const std::bad_cast& e) {}
+		try {
+			TOperand<double> const & divider = dynamic_cast<TOperand<double> const &>(*_stack[i]);
+			std::cout << divider._value << std::endl;
+		}
+		catch(const std::bad_cast& e) {}
+		i++;
+	}
+}
+
+void Vm::checkDivisionByZero(tToken *token)
+{
+	try {
+		TOperand<int8_t> const & divider = dynamic_cast<TOperand<int8_t> const &>(*_stack[1]);
+		if (divider._value == 0)
+ 		throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Division by zero\n\t" + token->data));
+	}
+	catch(const std::bad_cast& e) {}
+		try {
+		TOperand<int16_t> const & divider = dynamic_cast<TOperand<int16_t> const &>(*_stack[1]);
+		if (divider._value == 0)
+ 		throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Division by zero\n\t" + token->data));
+	}
+	catch(const std::bad_cast& e) {}
+		try {
+		TOperand<int32_t> const & divider = dynamic_cast<TOperand<int32_t> const &>(*_stack[1]);
+		if (divider._value == 0)
+ 		throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Division by zero\n\t" + token->data));
+	}
+	catch(const std::bad_cast& e) {}
+		try {
+		TOperand<float> const & divider = dynamic_cast<TOperand<float> const &>(*_stack[1]);
+		if (divider._value == 0)
+ 		throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Division by zero\n\t" + token->data));
+	}
+	catch(const std::bad_cast& e) {}
+	try {
+		TOperand<double> const & divider = dynamic_cast<TOperand<double> const &>(*_stack[1]);
+		if (divider._value == 0)
+ 		throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Division by zero\n\t" + token->data));
+	}
+	catch(const std::bad_cast& e) {}
+}
+
 void Vm::checkArithmeticInstr(tToken *token)
 {
 	if (_stack.size() < 2)
-	{
 		throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m The stack is composed of strictly less that two values when an arithmetic instruction is executed\n\t" + token->data));
-	}
 }
 
 void Vm::instrExit(tToken *token)
