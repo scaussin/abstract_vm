@@ -35,10 +35,6 @@ Vm::Vm(tToken *tokens) : _tokens(tokens)
 		std::cerr << e.what() << std::endl;
 		throw;
 	}
-	//IOperand const * item = _stack.front();
-//	(void)item;
-	/*TOperand  const *ee = dynamic_cast<TOperand const *>(item);
-	std::cout << ee->_value << std::endl;*/
 }
 
 Vm::Vm(Vm const &rhs)
