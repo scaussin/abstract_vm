@@ -24,6 +24,7 @@ class Vm {
 		void instrDump(tToken *);
 		void instrExit(tToken *);
 		void instrAssert(tToken *);
+		void instrPrint(tToken *);
 
 		void instrAdd(tToken *);
 		void instrSub(tToken *);

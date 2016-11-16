@@ -1,9 +1,20 @@
 push int8(7)
 push int32(4)
+dump
 add
+
+
+dump
+assert int32(11)
 push double(3.16)
 add
 
 dump
-assert float(14.16)
+assert double(14.16)
+push int8(67)
+print
+push int8(68)
+print
+push int16(69)
+print
 exit
