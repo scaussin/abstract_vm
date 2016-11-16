@@ -1,3 +1,9 @@
-;add
+push int8(7)
+push int32(4)
+add
+push double(3.16)
+add
+
 dump
+assert float(14.16)
 exit

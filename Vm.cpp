@@ -24,8 +24,8 @@ Vm::Vm(tToken *tokens) : _tokens(tokens)
 	_tabInstr[InstrExit] = &Vm::instrExit;
 	_tabInstr[InstrPop] = &Vm::instrPop;
 	_tabInstr[InstrDump] = &Vm::instrDump;
-	/*_tabInstr[InstrAssert] = &Vm::instrAssert;
-	_tabInstr[InstrPrint] = &Vm::instrPrint;*/
+	_tabInstr[InstrAssert] = &Vm::instrAssert;
+	/*_tabInstr[InstrPrint] = &Vm::instrPrint;*/
 	try
 	{
 		execute(_tokens);
@@ -75,7 +75,7 @@ void Vm::instrAdd(tToken *token)
 void Vm::instrSub(tToken *token)
 {
 	checkArithmeticInstr(token);
-	IOperand const *res = (*_stack[0] - *_stack[1]);
+	IOperand const *res = (*_stack[1] - *_stack[0]);
 	_stack.pop_front();
 	_stack.pop_front();
 	_stack.push_front(res);
@@ -94,7 +94,7 @@ void Vm::instrDiv(tToken *token)
 {
 	checkArithmeticInstr(token);
 	checkDivisionByZero(token);
-	IOperand const *res = (*_stack[0] / *_stack[1]);
+	IOperand const *res = (*_stack[1] / *_stack[0]);
 	_stack.pop_front();
 	_stack.pop_front();
 	_stack.push_front(res);
@@ -105,7 +105,7 @@ void Vm::instrMod(tToken *token)
 	checkArithmeticInstr(token);
 	checkDivisionByZero(token);
 
-	IOperand const *res = (*_stack[0] % *_stack[1]);
+	IOperand const *res = (*_stack[1] % *_stack[0]);
 	_stack.pop_front();
 	_stack.pop_front();
 	_stack.push_front(res);
@@ -118,6 +118,78 @@ void Vm::instrPop(tToken *token)
 	_stack.pop_front();
 }
 
+void Vm::instrAssert(tToken *token)
+{
+	if (_stack.size() == 0)
+		throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Instruction assert on an empty stack\n\t" + token->data + " " + token->right->data));
+	try {
+		TOperand<int8_t> const & operand = dynamic_cast<TOperand<int8_t> const &>(*_stack[0]);
+		if (_valueTypeToOperandType[token->right->valueType] == operand._type)
+		{
+			IOperand const *res = iOperandFactory.createOperand(_valueTypeToOperandType[token->right->valueType], token->right->data);
+			TOperand<int8_t> const & assert = dynamic_cast<TOperand<int8_t> const &>(*res);
+			if (operand._value != assert._value)
+				throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Instruction assert is not true (different value)\n\t" + token->data + " " + token->right->data));
+		}
+		else
+			throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Instruction assert is not true (different type)\n\t" + token->data + " " + token->right->data));
+	}
+	catch(const std::bad_cast& e) {}
+	try {
+		TOperand<int16_t> const & operand = dynamic_cast<TOperand<int16_t> const &>(*_stack[0]);
+		if (_valueTypeToOperandType[token->right->valueType] == operand._type)
+		{
+			IOperand const *res = iOperandFactory.createOperand(_valueTypeToOperandType[token->right->valueType], token->right->data);
+			TOperand<int16_t> const & assert = dynamic_cast<TOperand<int16_t> const &>(*res);
+			if (operand._value != assert._value)
+				throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Instruction assert is not true (different value)\n\t" + token->data + " " + token->right->data));
+		}
+		else
+			throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Instruction assert is not true (different type)\n\t" + token->data + " " + token->right->data));
+	}
+	catch(const std::bad_cast& e) {}
+	try {
+		TOperand<int32_t> const & operand = dynamic_cast<TOperand<int32_t> const &>(*_stack[0]);
+		if (_valueTypeToOperandType[token->right->valueType] == operand._type)
+		{
+			IOperand const *res = iOperandFactory.createOperand(_valueTypeToOperandType[token->right->valueType], token->right->data);
+			TOperand<int32_t> const & assert = dynamic_cast<TOperand<int32_t> const &>(*res);
+			if (operand._value != assert._value)
+				throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Instruction assert is not true (different value)\n\t" + token->data + " " + token->right->data));
+		}
+		else
+			throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Instruction assert is not true (different type)\n\t" + token->data + " " + token->right->data));
+	}
+	catch(const std::bad_cast& e) {}
+	try {
+		TOperand<float> const & operand = dynamic_cast<TOperand<float> const &>(*_stack[0]);
+		if (_valueTypeToOperandType[token->right->valueType] == operand._type)
+		{
+			IOperand const *res = iOperandFactory.createOperand(_valueTypeToOperandType[token->right->valueType], token->right->data);
+			TOperand<float> const & assert = dynamic_cast<TOperand<float> const &>(*res);
+			if (operand._value != assert._value)
+				throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Instruction assert is not true (different value)\n\t" + token->data + " " + token->right->data));
+		}
+		else
+			throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Instruction assert is not true (different type)\n\t" + token->data + " " + token->right->data));
+	}
+	catch(const std::bad_cast& e) {}
+	try {
+		TOperand<double> const & operand = dynamic_cast<TOperand<double> const &>(*_stack[0]);
+		if (_valueTypeToOperandType[token->right->valueType] == operand._type)
+		{
+			IOperand const *res = iOperandFactory.createOperand(_valueTypeToOperandType[token->right->valueType], token->right->data);
+			TOperand<double> const & assert = dynamic_cast<TOperand<double> const &>(*res);
+			if (operand._value != assert._value)
+				throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Instruction assert is not true (different value)\n\t" + token->data + " " + token->right->data));
+		}
+		else
+			throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Instruction assert is not true (different type)\n\t" + token->data + " " + token->right->data));
+	}
+	catch(const std::bad_cast& e) {}
+}
+
+
 void Vm::instrDump(tToken *token)
 {
 	(void)token;
@@ -125,28 +197,28 @@ void Vm::instrDump(tToken *token)
 	while (i < _stack.size())
 	{
 		try {
-			TOperand<int8_t> const & divider = dynamic_cast<TOperand<int8_t> const &>(*_stack[i]);
-			std::cout << (int)divider._value << std::endl;
-		}
-		catch(const std::bad_cast& e) {}
-			try {
-			TOperand<int16_t> const & divider = dynamic_cast<TOperand<int16_t> const &>(*_stack[i]);
-			std::cout << divider._value << std::endl;
-		}
-		catch(const std::bad_cast& e) {}
-			try {
-			TOperand<int32_t> const & divider = dynamic_cast<TOperand<int32_t> const &>(*_stack[i]);
-			std::cout << divider._value << std::endl;
-		}
-		catch(const std::bad_cast& e) {}
-			try {
-			TOperand<float> const & divider = dynamic_cast<TOperand<float> const &>(*_stack[i]);
-			std::cout << divider._value << std::endl;
+			TOperand<int8_t> const & operand = dynamic_cast<TOperand<int8_t> const &>(*_stack[i]);
+			std::cout << (int)operand._value << std::endl;
 		}
 		catch(const std::bad_cast& e) {}
 		try {
-			TOperand<double> const & divider = dynamic_cast<TOperand<double> const &>(*_stack[i]);
-			std::cout << divider._value << std::endl;
+			TOperand<int16_t> const & operand = dynamic_cast<TOperand<int16_t> const &>(*_stack[i]);
+			std::cout << operand._value << std::endl;
+		}
+		catch(const std::bad_cast& e) {}
+		try {
+			TOperand<int32_t> const & operand = dynamic_cast<TOperand<int32_t> const &>(*_stack[i]);
+			std::cout << operand._value << std::endl;
+		}
+		catch(const std::bad_cast& e) {}
+		try {
+			TOperand<float> const & operand = dynamic_cast<TOperand<float> const &>(*_stack[i]);
+			std::cout << operand._value << std::endl;
+		}
+		catch(const std::bad_cast& e) {}
+		try {
+			TOperand<double> const & operand = dynamic_cast<TOperand<double> const &>(*_stack[i]);
+			std::cout << operand._value << std::endl;
 		}
 		catch(const std::bad_cast& e) {}
 		i++;
@@ -158,31 +230,31 @@ void Vm::checkDivisionByZero(tToken *token)
 	try {
 		TOperand<int8_t> const & divider = dynamic_cast<TOperand<int8_t> const &>(*_stack[1]);
 		if (divider._value == 0)
- 		throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Division by zero\n\t" + token->data));
+	 		throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Division by zero\n\t" + token->data));
 	}
 	catch(const std::bad_cast& e) {}
-		try {
+	try {
 		TOperand<int16_t> const & divider = dynamic_cast<TOperand<int16_t> const &>(*_stack[1]);
 		if (divider._value == 0)
- 		throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Division by zero\n\t" + token->data));
+	 		throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Division by zero\n\t" + token->data));
 	}
 	catch(const std::bad_cast& e) {}
-		try {
+	try {
 		TOperand<int32_t> const & divider = dynamic_cast<TOperand<int32_t> const &>(*_stack[1]);
 		if (divider._value == 0)
- 		throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Division by zero\n\t" + token->data));
+	 		throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Division by zero\n\t" + token->data));
 	}
 	catch(const std::bad_cast& e) {}
-		try {
+	try {
 		TOperand<float> const & divider = dynamic_cast<TOperand<float> const &>(*_stack[1]);
 		if (divider._value == 0)
- 		throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Division by zero\n\t" + token->data));
+	 		throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Division by zero\n\t" + token->data));
 	}
 	catch(const std::bad_cast& e) {}
 	try {
 		TOperand<double> const & divider = dynamic_cast<TOperand<double> const &>(*_stack[1]);
 		if (divider._value == 0)
- 		throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Division by zero\n\t" + token->data));
+	 		throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Division by zero\n\t" + token->data));
 	}
 	catch(const std::bad_cast& e) {}
 }

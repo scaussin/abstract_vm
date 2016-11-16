@@ -23,6 +23,7 @@ class Vm {
 		void instrPop(tToken *);
 		void instrDump(tToken *);
 		void instrExit(tToken *);
+		void instrAssert(tToken *);
 
 		void instrAdd(tToken *);
 		void instrSub(tToken *);
