@@ -23,12 +23,11 @@ typedef struct	sMatchValue
 class Lexer {
 	public :
 		Lexer();
-		Lexer(std::vector<std::string>, std::string);
+		Lexer(std::vector<std::string>);
 		Lexer(Lexer const &);
 		Lexer &operator=(Lexer const &rhs);
 		~Lexer();
 		std::vector<std::string> _data;
-		std::string _endInstruct;
 		tToken *_tokens;
 		std::vector<tMatchInstr> _matchInstr;
 		std::vector<tMatchValue> _matchValue;

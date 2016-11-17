@@ -3,7 +3,7 @@
 Parser::Parser()
 {}
 
-Parser::Parser(tToken *tokens, std::string endInst) : _tokens(tokens), _endInst(endInst)
+Parser::Parser(tToken *tokens) : _tokens(tokens)
 {
 	int countInstrEnd = 0;
 
@@ -35,7 +35,6 @@ Parser &Parser::operator=(Parser const &rhs)
 	_tokens = rhs._tokens;
 	_checkValue = rhs._checkValue;
 	_checkInstr = rhs._checkInstr;
-	_endInst = rhs._endInst;
 	return (*this);
 }
 
@@ -84,11 +83,6 @@ void Parser::checkEndInstr(tToken *token)
 		token->type = err;
 		throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError parser:\033[m Forbidden instruction or value after 'end' instruction\n\t" + token->data));
 	}
-	if (token->data != _endInst)
-	{
-		token->type = err;
-		throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError parser:\033[m Bad 'end' instruction\n\t" + token->data));
-	}
 }
 
 void Parser::noTokenAtRight(tToken *token)
@@ -122,20 +116,6 @@ void Parser::checkInt8(tToken *token)
 {
 	instrAtLeft(token);
 	noTokenAtRight(token);
-	/*try
-	{
-		std::size_t lastChar;
-		int8_t result = std::stoi(str, &lastChar, 10);
-		return lastChar == str.size();
-	}
-	catch (std::invalid_argument&)
-	{
-		return false;
-	}
-	catch (std::out_of_range&)
-	{
-		return false;
-	}*/
 }
 
 void Parser::checkInt16(tToken *token)
@@ -169,16 +149,13 @@ void Parser::checkTokens(tToken *token, int *countInstrEnd)
 	{
 		if (token->type == instr)
 		{
-			// std::cout << token->data << "ok1\n";
 			for (std::vector<tCheckInstr>::iterator i = _checkInstr.begin(); i != _checkInstr.end(); ++i)
 			{
 				if (token->instrType == i->type)
 				{
-					// std::cout << "ok\n";
 					(this->*i->func)(token);
 					if (token->instrType == InstrExit)
 					{
-						// std::cout << "ex\n";
 						(*countInstrEnd)++;
 					}
 				}

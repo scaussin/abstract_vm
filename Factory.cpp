@@ -95,14 +95,28 @@ IOperand const * Factory::createFloat(std::string const & value) const
 	{
 		throw(AbstractException("\033[31mError run time:\033[m float out of range"));
 	}
+	if (!isfinite(result) && result > 0)
+		throw(AbstractException("\033[31mError run time:\033[m float overflow"));
+	if (!isfinite(result) && result < 0)
+		throw(AbstractException("\033[31mError run time:\033[m float underflow"));
 	return (new TOperand<float>(eFloat, result));
-
-	/*float result = std::stof(value);
-	return (new TOperand<float>(eFloat, result));*/
 }
 
 IOperand const * Factory::createDouble(std::string const & value) const
 {
-	double result = std::stod(value);
+	double result;
+	try
+	{
+		std::size_t lastChar;
+		result = std::stod(value, &lastChar);
+	}
+	catch (std::out_of_range & e)
+	{
+		throw(AbstractException("\033[31mError run time:\033[m double out of range"));
+	}
+	if (!isfinite(result) && result > 0)
+		throw(AbstractException("\033[31mError run time:\033[m double overflow"));
+	if (!isfinite(result) && result < 0)
+		throw(AbstractException("\033[31mError run time:\033[m double underflow"));
 	return (new TOperand<double>(eDouble, result));
 }

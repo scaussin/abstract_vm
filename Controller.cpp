@@ -15,8 +15,8 @@ Controller::Controller(std::istream *in, std::string endInstruct) : _in(in), _en
 
 	data = readIn();
 	try {
-		lexer = Lexer(data, endInstruct);
-		parser = Parser(lexer._tokens, _endInstruct);
+		lexer = Lexer(data);
+		parser = Parser(lexer._tokens);
 		vm = Vm(parser._tokens);
 	}
 	catch(std::exception const& e) {
@@ -48,9 +48,10 @@ std::vector<std::string> Controller::readIn()
 
 	while (getline(*_in, s, '\n'))
 	{
-		data.push_back(s);
-		if (_endInstruct == END_STDIN && s == END_STDIN)
+		std::replace(s.begin(), s.end(), '\t', ' ');
+		if (_endInstruct == END_STDIN && s.find(END_STDIN) != std::string::npos)
 			break;
+		data.push_back(s);
 		if (data.back().find(';') != std::string::npos)
 			data.back().resize(data.back().find(';'));
 		i++;

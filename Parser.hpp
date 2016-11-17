@@ -4,7 +4,7 @@
 class Parser {
 	public :
 		Parser();
-		Parser(tToken *, std::string);
+		Parser(tToken *);
 		Parser(Parser const &);
 		Parser &operator=(Parser const &rhs);
 		~Parser();
@@ -30,7 +30,6 @@ class Parser {
 
 		std::vector<tCheckValue> _checkValue;
 		std::vector<tCheckInstr> _checkInstr;
-		std::string _endInst;
 	private :
 		void checkTokens(tToken *, int *);
 		void initCheckVector();

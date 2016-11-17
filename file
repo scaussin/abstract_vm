@@ -1,5 +1,12 @@
-push float(99999.6)
-push int32(1)
-add
-dump
-exit
+
+	
+push 	 double(13.0)  
+push double(2.0)  
+div
+
+
+assert 	 float(6.5) 
+ dump
+ exit
+
+

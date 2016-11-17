@@ -18,7 +18,7 @@ int	main(int ac, char **av)
 			std::cout << "[ERROR] open file" << std::endl;
 	}
 	else if (ac == 1)
-		controller = Controller(&std::cin, ";;");
+		controller = Controller(&std::cin, END_STDIN);
 	else
 		std::cout << "usage: ./abstract_vm <file>" << std::endl;
 	return (0);

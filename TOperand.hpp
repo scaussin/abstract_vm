@@ -11,7 +11,6 @@ class TOperand : public IOperand {
 		TOperand(eOperandType, T);
 		TOperand(TOperand const &);
 		IOperand &operator=(TOperand const &rhs);
-		//bool operator==(IOperand const & rhs );
 		~TOperand();
 		eOperandType _type;
 		T _value;
@@ -57,15 +56,6 @@ IOperand & TOperand<T>::operator=(TOperand const &rhs)
 	_value = rhs._value;
 	return (this);
 }
-/*
-template <typename T>
-bool TOperand<T>::operator==(IOperand const & rhs )
-{
-TOperand const & ee = dynamic_cast<TOperand const &>(rhs);
-	if (ee._value == _value)
-		return (true);
-	return (false);
-}*/
 
 template <typename T>
 IOperand const * TOperand<T>::operator+( IOperand const & rhs ) const

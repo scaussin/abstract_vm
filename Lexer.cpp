@@ -4,7 +4,7 @@ Lexer::Lexer()
 {
 }
 
-Lexer::Lexer(std::vector<std::string> data, std::string endInstruct) : _data(data), _endInstruct(endInstruct)
+Lexer::Lexer(std::vector<std::string> data) : _data(data)
 {
 	initMatchVector();
 	try {
@@ -31,7 +31,6 @@ Lexer &Lexer::operator=(Lexer const &rhs)
 {
 	_data = rhs._data;
 	_tokens = rhs._tokens;
-	_endInstruct = rhs._endInstruct;
 	_matchInstr = rhs._matchInstr;
 	_matchValue = rhs._matchValue;
     return (*this);
@@ -50,7 +49,6 @@ void Lexer::initMatchVector()
 	_matchInstr.push_back(sMatchInstr(std::regex("^mod$"), InstrMod));
 	_matchInstr.push_back(sMatchInstr(std::regex("^print$"), InstrPrint));
 	_matchInstr.push_back(sMatchInstr(std::regex("^exit$"), InstrExit));
-	_matchInstr.push_back(sMatchInstr(std::regex("^;;$"), InstrExit));
 
 	_matchValue.push_back(sMatchValue(std::regex("^int8\\((-?[0-9]+)\\)$"), ValueInt8));
 	_matchValue.push_back(sMatchValue(std::regex("^int16\\((-?[0-9]+)\\)$"), ValueInt16));

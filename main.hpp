@@ -17,6 +17,7 @@
 #include <stdexcept>
 #include <algorithm>
 #include <typeinfo>
+#include <math.h>
 
 enum eTokenType
 {
