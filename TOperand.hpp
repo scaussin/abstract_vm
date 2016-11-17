@@ -24,7 +24,6 @@ class TOperand : public IOperand {
 		virtual IOperand const * operator/( IOperand const & rhs ) const;
 		virtual IOperand const * operator%( IOperand const & rhs ) const;
 		virtual std::string const & toString( void ) const;
-        // virtual ~IOperand( void ) {}
 
 	private :
 

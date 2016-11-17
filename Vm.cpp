@@ -23,9 +23,12 @@ Vm::Vm(tToken *tokens) : _tokens(tokens)
 
 	_tabInstr[InstrExit] = &Vm::instrExit;
 	_tabInstr[InstrPop] = &Vm::instrPop;
+	_tabInstr[InstrDumpR] = &Vm::instrDumpR;
 	_tabInstr[InstrDump] = &Vm::instrDump;
 	_tabInstr[InstrAssert] = &Vm::instrAssert;
 	_tabInstr[InstrPrint] = &Vm::instrPrint;
+	_tabInstr[InstrPrintAll] = &Vm::instrPrintAll;
+	_tabInstr[InstrPrintAllR] = &Vm::instrPrintAllR;
 	try
 	{
 		execute(_tokens);
@@ -110,27 +113,65 @@ void Vm::instrMod(tToken *token)
 void Vm::instrPop(tToken *token)
 {
 	if (_stack.size() == 0)
-		throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Instruction pop on an empty stack\n\t" + token->data));
+		throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Instruction pop on a empty stack\n\t" + token->data));
 	_stack.pop_front();
 }
 
 void Vm::instrPrint(tToken *token)
 {
-	if (_stack.size() < 1)
-		throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Instruction print on an empty stack\n\t" + token->data));
-	if (eInt8 == _stack[0]->getType())
+	if (_stack.size() > 0)
 	{
-		TOperand<int8_t> const & operand = dynamic_cast<TOperand<int8_t> const &>(*_stack[0]);
-		std::cout << operand._value << std::endl;
+		/*throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Instruction print on a empty stack\n\t" + token->data));*/
+		if (eInt8 == _stack[0]->getType())
+		{
+			TOperand<int8_t> const & operand = dynamic_cast<TOperand<int8_t> const &>(*_stack[0]);
+			std::cout << operand._value << std::endl;
+		}
+		else
+			throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Instruction print on an wrong type (int8 required)\n\t" + token->data));
 	}
-	else
-		throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Instruction print on a wrong type (int8 required)\n\t" + token->data));
+}
+
+void Vm::instrPrintAllR(tToken *token)
+{
+	/*if (_stack.size() < 1)
+		throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Instruction print on a empty stack\n\t" + token->data));*/
+	int i = (int)_stack.size() - 1;
+	while (i >= 0)
+	{
+		if (eInt8 == _stack[i]->getType())
+		{
+			TOperand<int8_t> const & operand = dynamic_cast<TOperand<int8_t> const &>(*_stack[i]);
+			std::cout << operand._value << std::endl;
+		}
+		else
+			throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Instruction print on an wrong type (int8 required)\n\t" + token->data));
+		i--;
+	}
+}
+
+void Vm::instrPrintAll(tToken *token)
+{
+	/*if (_stack.size() < 1)
+		throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Instruction print on a empty stack\n\t" + token->data));*/
+	size_t i = 0;
+	while (i < _stack.size())
+	{
+		if (eInt8 == _stack[i]->getType())
+		{
+			TOperand<int8_t> const & operand = dynamic_cast<TOperand<int8_t> const &>(*_stack[i]);
+			std::cout << operand._value << std::endl;
+		}
+		else
+			throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Instruction print on an wrong type (int8 required)\n\t" + token->data));
+		i++;
+	}
 }
 
 void Vm::instrAssert(tToken *token)
 {
 	if (_stack.size() == 0)
-		throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Instruction assert on an empty stack\n\t" + token->data + " " + token->right->data));
+		throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Instruction assert on a empty stack\n\t" + token->data + " " + token->right->data));
 	try {
 		TOperand<int8_t> const & operand = dynamic_cast<TOperand<int8_t> const &>(*_stack[0]);
 		if (_valueTypeToOperandType[token->right->valueType] == operand._type)
@@ -231,6 +272,41 @@ void Vm::instrDump(tToken *token)
 		}
 		catch(const std::bad_cast& e) {}
 		i++;
+	}
+}
+
+void Vm::instrDumpR(tToken *token)
+{
+	(void)token;
+	int i = (int)_stack.size() - 1;
+	while (i >= 0)
+	{
+		try {
+			TOperand<int8_t> const & operand = dynamic_cast<TOperand<int8_t> const &>(*_stack[i]);
+			std::cout << (int)operand._value << std::endl;
+		}
+		catch(const std::bad_cast& e) {}
+		try {
+			TOperand<int16_t> const & operand = dynamic_cast<TOperand<int16_t> const &>(*_stack[i]);
+			std::cout << operand._value << std::endl;
+		}
+		catch(const std::bad_cast& e) {}
+		try {
+			TOperand<int32_t> const & operand = dynamic_cast<TOperand<int32_t> const &>(*_stack[i]);
+			std::cout << operand._value << std::endl;
+		}
+		catch(const std::bad_cast& e) {}
+		try {
+			TOperand<float> const & operand = dynamic_cast<TOperand<float> const &>(*_stack[i]);
+			std::cout << operand._value << std::endl;
+		}
+		catch(const std::bad_cast& e) {}
+		try {
+			TOperand<double> const & operand = dynamic_cast<TOperand<double> const &>(*_stack[i]);
+			std::cout << operand._value << std::endl;
+		}
+		catch(const std::bad_cast& e) {}
+		i--;
 	}
 }
 

@@ -22,9 +22,12 @@ class Vm {
 		void instrPush(tToken *);
 		void instrPop(tToken *);
 		void instrDump(tToken *);
+		void instrDumpR(tToken *);
 		void instrExit(tToken *);
 		void instrAssert(tToken *);
 		void instrPrint(tToken *);
+		void instrPrintAll(tToken *);
+		void instrPrintAllR(tToken *);
 
 		void instrAdd(tToken *);
 		void instrSub(tToken *);

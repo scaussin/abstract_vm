@@ -41,6 +41,7 @@ void Lexer::initMatchVector()
 	_matchInstr.push_back(sMatchInstr(std::regex("^push$"), InstrPush));
 	_matchInstr.push_back(sMatchInstr(std::regex("^pop$"), InstrPop));
 	_matchInstr.push_back(sMatchInstr(std::regex("^dump$"), InstrDump));
+	_matchInstr.push_back(sMatchInstr(std::regex("^dumpR$"), InstrDumpR));
 	_matchInstr.push_back(sMatchInstr(std::regex("^assert$"), InstrAssert));
 	_matchInstr.push_back(sMatchInstr(std::regex("^add$"), InstrAdd));
 	_matchInstr.push_back(sMatchInstr(std::regex("^sub$"), InstrSub));
@@ -48,6 +49,8 @@ void Lexer::initMatchVector()
 	_matchInstr.push_back(sMatchInstr(std::regex("^div$"), InstrDiv));
 	_matchInstr.push_back(sMatchInstr(std::regex("^mod$"), InstrMod));
 	_matchInstr.push_back(sMatchInstr(std::regex("^print$"), InstrPrint));
+	_matchInstr.push_back(sMatchInstr(std::regex("^printAll$"), InstrPrintAll));
+	_matchInstr.push_back(sMatchInstr(std::regex("^printAllR$"), InstrPrintAllR));
 	_matchInstr.push_back(sMatchInstr(std::regex("^exit$"), InstrExit));
 
 	_matchValue.push_back(sMatchValue(std::regex("^int8\\((-?[0-9]+)\\)$"), ValueInt8));

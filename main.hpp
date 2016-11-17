@@ -51,6 +51,7 @@ enum eInstrType
 	InstrPush,
 	InstrPop,
 	InstrDump,
+	InstrDumpR,
 	InstrAssert,
 	InstrAdd,
 	InstrSub,
@@ -58,6 +59,8 @@ enum eInstrType
 	InstrDiv,
 	InstrMod,
 	InstrPrint,
+	InstrPrintAll,
+	InstrPrintAllR,
 	InstrExit
 };
 

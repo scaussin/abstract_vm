@@ -1,12 +1,9 @@
+push int8(66)
+push int8(64)
+dump
+dumpR
+print
+printAll
+printAllR
 
-	
-push 	 double(13.0)  
-push double(2.0)  
-div
-
-
-assert 	 float(6.5) 
- dump
- exit
-
-
+exit
