@@ -72,27 +72,27 @@ IOperand const * TOperand<T>::operator+( IOperand const & rhs ) const
 {
 	try {
 		TOperand<int8_t> const & right = dynamic_cast<TOperand<int8_t> const &>(rhs);
-		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string(_value + right._value)));
+		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string((double)_value + (double)right._value)));
 	}
 	catch(const std::bad_cast& e) {}
 	try {
 		TOperand<int16_t> const & right = dynamic_cast<TOperand<int16_t> const &>(rhs);
-		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string(_value + right._value)));
+		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string((double)_value + (double)right._value)));
 	}
 	catch(const std::bad_cast& e) {}
 	try {
 		TOperand<int32_t> const & right = dynamic_cast<TOperand<int32_t> const &>(rhs);
-		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string(_value + right._value)));
+		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string((double)_value + (double)right._value)));
 	}
 	catch(const std::bad_cast& e) {}
 	try {
 		TOperand<float> const & right = dynamic_cast<TOperand<float> const &>(rhs);
-		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string(_value + right._value)));
+		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string((double)_value + (double)right._value)));
 	}
 	catch(const std::bad_cast& e) {}
 	try {
 		TOperand<double> const & right = dynamic_cast<TOperand<double> const &>(rhs);
-		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string(_value + right._value)));
+		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string((double)_value + (double)right._value)));
 	}
 	catch(const std::bad_cast& e) {}
 	return (iOperandFactory.createOperand(eInt8, "0"));
@@ -103,27 +103,27 @@ IOperand const * TOperand<T>::operator-( IOperand const & rhs ) const
 {
 	try {
 		TOperand<int8_t> const & right = dynamic_cast<TOperand<int8_t> const &>(rhs);
-		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string(_value - right._value)));
+		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string((double)_value - (double)right._value)));
 	}
 	catch(const std::bad_cast& e) {}
 	try {
 		TOperand<int16_t> const & right = dynamic_cast<TOperand<int16_t> const &>(rhs);
-		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string(_value - right._value)));
+		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string((double)_value - (double)right._value)));
 	}
 	catch(const std::bad_cast& e) {}
 	try {
 		TOperand<int32_t> const & right = dynamic_cast<TOperand<int32_t> const &>(rhs);
-		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string(_value - right._value)));
+		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string((double)_value - (double)right._value)));
 	}
 	catch(const std::bad_cast& e) {}
 	try {
 		TOperand<float> const & right = dynamic_cast<TOperand<float> const &>(rhs);
-		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string(_value - right._value)));
+		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string((double)_value - (double)right._value)));
 	}
 	catch(const std::bad_cast& e) {}
 	try {
 		TOperand<double> const & right = dynamic_cast<TOperand<double> const &>(rhs);
-		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string(_value - right._value)));
+		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string((double)_value - (double)right._value)));
 	}
 	catch(const std::bad_cast& e) {}
 	return (iOperandFactory.createOperand(eInt8, "0"));
@@ -134,27 +134,27 @@ IOperand const * TOperand<T>::operator/( IOperand const & rhs ) const
 {
 		try {
 		TOperand<int8_t> const & right = dynamic_cast<TOperand<int8_t> const &>(rhs);
-		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string(_value / right._value)));
+		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string((double)_value / (double)right._value)));
 	}
 	catch(const std::bad_cast& e) {}
 	try {
 		TOperand<int16_t> const & right = dynamic_cast<TOperand<int16_t> const &>(rhs);
-		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string(_value / right._value)));
+		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string((double)_value / (double)right._value)));
 	}
 	catch(const std::bad_cast& e) {}
 	try {
 		TOperand<int32_t> const & right = dynamic_cast<TOperand<int32_t> const &>(rhs);
-		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string(_value / right._value)));
+		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string((double)_value / (double)right._value)));
 	}
 	catch(const std::bad_cast& e) {}
 	try {
 		TOperand<float> const & right = dynamic_cast<TOperand<float> const &>(rhs);
-		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string(_value / right._value)));
+		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string((double)_value / (double)right._value)));
 	}
 	catch(const std::bad_cast& e) {}
 	try {
 		TOperand<double> const & right = dynamic_cast<TOperand<double> const &>(rhs);
-		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string(_value / right._value)));
+		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string((double)_value / (double)right._value)));
 	}
 	catch(const std::bad_cast& e) {}
 	return (iOperandFactory.createOperand(eInt8, "0"));
@@ -165,27 +165,27 @@ IOperand const * TOperand<T>::operator*( IOperand const & rhs ) const
 {
 	try {
 		TOperand<int8_t> const & right = dynamic_cast<TOperand<int8_t> const &>(rhs);
-		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string(_value * right._value)));
+		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string((double)_value * (double)right._value)));
 	}
 	catch(const std::bad_cast& e) {}
 	try {
 		TOperand<int16_t> const & right = dynamic_cast<TOperand<int16_t> const &>(rhs);
-		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string(_value * right._value)));
+		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string((double)_value * (double)right._value)));
 	}
 	catch(const std::bad_cast& e) {}
 	try {
 		TOperand<int32_t> const & right = dynamic_cast<TOperand<int32_t> const &>(rhs);
-		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string(_value * right._value)));
+		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string((double)_value * (double)right._value)));
 	}
 	catch(const std::bad_cast& e) {}
 	try {
 		TOperand<float> const & right = dynamic_cast<TOperand<float> const &>(rhs);
-		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string(_value * right._value)));
+		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string((double)_value * (double)right._value)));
 	}
 	catch(const std::bad_cast& e) {}
 	try {
 		TOperand<double> const & right = dynamic_cast<TOperand<double> const &>(rhs);
-		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string(_value * right._value)));
+		return (iOperandFactory.createOperand(std::max(_type, right._type), std::to_string((double)_value * (double)right._value)));
 	}
 	catch(const std::bad_cast& e) {}
 	return (iOperandFactory.createOperand(eInt8, "0"));

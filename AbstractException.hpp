@@ -1,14 +1,11 @@
 #ifndef ABSTRACTEXCEPTION_HPP
 # define ABSTRACTEXCEPTION_HPP
 
-class AbstractException: public std::exception{
+class AbstractException: public std::runtime_error{
 
 	public :
-		AbstractException();
-//    explicit  AbstractException (const std::string& what_arg);
-		AbstractException(std::string) throw();
-		AbstractException(AbstractException const &);
 		AbstractException &operator=(AbstractException const &rhs);
+		explicit AbstractException (const std::string& what_arg);
 		~AbstractException() throw();
 		const char* what() const throw();
 		std::string _msg;

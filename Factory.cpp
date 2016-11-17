@@ -27,41 +27,82 @@ Factory &Factory::operator=(Factory const &rhs)
 
 IOperand const * Factory::createOperand(eOperandType type, std::string const & value) const
 {
-	(void)type;
-	(void)value;
 	return ((this->*_tabFactoryOperand[(int)type])(value));
 }
 
 IOperand const * Factory::createInt8(std::string const & value) const
 {
-    int result = std::stoi(value, NULL, 10);
-    if (result > 127)
-        throw AbstractException("int8_t overflow");
-    if (result < -127)
-        throw AbstractException("int8_t underflow");
+	int result;
+	try
+	{
+		std::size_t lastChar;
+		result = std::stoi(value, &lastChar, 10);
+	}
+	catch (std::out_of_range & e)
+	{
+		throw(AbstractException("\033[31mError run time:\033[m int8 out of range"));
+	}
+	if (result > 127)
+		throw(AbstractException("\033[31mError run time:\033[m int8 overflow"));
+	if (result < -127)
+		throw(AbstractException("\033[31mError run time:\033[m int8 underflow"));
 	return (new TOperand<int8_t>(eInt8, result));
 }
 
 IOperand const * Factory::createInt16(std::string const & value) const
 {
-    int result = std::stoi(value, NULL, 10);
+	int result;
+	try
+	{
+		std::size_t lastChar;
+		result = std::stoi(value, &lastChar, 10);
+	}
+	catch (std::out_of_range & e)
+	{
+		throw(AbstractException("\033[31mError run time:\033[m int16 out of range"));
+	}
+	if (result > 32767)
+		throw(AbstractException("\033[31mError run time:\033[m int16 overflow"));
+	if (result < -32768)
+		throw(AbstractException("\033[31mError run time:\033[m int16 underflow"));
 	return (new TOperand<int16_t>(eInt16, result));
 }
 
 IOperand const * Factory::createInt32(std::string const & value) const
 {
-    int result = std::stoi(value, NULL, 10);
+	int result;
+	try
+	{
+		std::size_t lastChar;
+		result = std::stoi(value, &lastChar, 10);
+	}
+	catch (std::out_of_range & e)
+	{
+		throw(AbstractException("\033[31mError run time:\033[m int32 out of range"));
+	}
 	return (new TOperand<int32_t>(eInt32, result));
 }
 
 IOperand const * Factory::createFloat(std::string const & value) const
 {
-    float result = std::stof(value);
+	float result;
+	try
+	{
+		std::size_t lastChar;
+		result = std::stof(value, &lastChar);
+	}
+	catch (std::out_of_range & e)
+	{
+		throw(AbstractException("\033[31mError run time:\033[m float out of range"));
+	}
 	return (new TOperand<float>(eFloat, result));
+
+	/*float result = std::stof(value);
+	return (new TOperand<float>(eFloat, result));*/
 }
 
 IOperand const * Factory::createDouble(std::string const & value) const
 {
-    double result = std::stod(value);
+	double result = std::stod(value);
 	return (new TOperand<double>(eDouble, result));
 }

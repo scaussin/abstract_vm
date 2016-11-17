@@ -33,7 +33,7 @@ class Vm {
 		void instrMod(tToken *);
 
 		void checkArithmeticInstr(tToken *);
-        void checkDivisionByZero(tToken *token);
+        void checkDivisionByZero(tToken *);
 };
 
 #endif

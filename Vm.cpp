@@ -124,7 +124,7 @@ void Vm::instrPrint(tToken *token)
 		std::cout << operand._value << std::endl;
 	}
 	else
-		throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Instruction print on an wrong type (int8 required)\n\t" + token->data));
+		throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Instruction print on a wrong type (int8 required)\n\t" + token->data));
 }
 
 void Vm::instrAssert(tToken *token)
