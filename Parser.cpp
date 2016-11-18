@@ -11,9 +11,9 @@ Parser::Parser(tToken *tokens) : _tokens(tokens)
 	checkTokens(tokens, &countInstrEnd);
 	try {
 		if (countInstrEnd == 0)
-			throw(AbstractException("\033[31mError parser:\033[m 'end' instruction is required"));
+			throw(AbstractException("\033[31mError parser:\033[m Instruction exit is required"));
 		else if (countInstrEnd > 1)
-			throw(AbstractException("\033[31mError parser:\033[m Multiple 'end' instruction"));
+			throw(AbstractException("\033[31mError parser:\033[m Multiple exit instruction"));
 	}
 	catch(std::exception const& e)
 	{
@@ -51,6 +51,14 @@ void Parser::initCheckVector()
 	_checkInstr.push_back(sCheckInstr(InstrMod, &Parser::checkInstr));
 	_checkInstr.push_back(sCheckInstr(InstrPrint, &Parser::checkInstr));
 	_checkInstr.push_back(sCheckInstr(InstrExit, &Parser::checkEndInstr));
+
+	_checkInstr.push_back(sCheckInstr(InstrAddAll, &Parser::checkInstr));
+	_checkInstr.push_back(sCheckInstr(InstrMulAll, &Parser::checkInstr));
+	_checkInstr.push_back(sCheckInstr(InstrPopAll, &Parser::checkInstr));
+	_checkInstr.push_back(sCheckInstr(InstrPrintAll, &Parser::checkInstr));
+	_checkInstr.push_back(sCheckInstr(InstrPrintAllR, &Parser::checkInstr));
+	_checkInstr.push_back(sCheckInstr(InstrDumpR, &Parser::checkInstr));
+
 
 	_checkValue.push_back(sCheckValue(ValueInt8, &Parser::checkInt8));
 	_checkValue.push_back(sCheckValue(ValueInt16, &Parser::checkInt16));

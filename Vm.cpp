@@ -14,19 +14,21 @@ Vm::Vm(tToken *tokens) : _tokens(tokens)
 
 	_tabInstr[InstrNone] = &Vm::instrExit;
 	_tabInstr[InstrPush] = &Vm::instrPush;
-
 	_tabInstr[InstrAdd] = &Vm::instrAdd;
 	_tabInstr[InstrSub] = &Vm::instrSub;
 	_tabInstr[InstrMul] = &Vm::instrMul;
 	_tabInstr[InstrDiv] = &Vm::instrDiv;
 	_tabInstr[InstrMod] = &Vm::instrMod;
-
 	_tabInstr[InstrExit] = &Vm::instrExit;
 	_tabInstr[InstrPop] = &Vm::instrPop;
-	_tabInstr[InstrDumpR] = &Vm::instrDumpR;
-	_tabInstr[InstrDump] = &Vm::instrDump;
 	_tabInstr[InstrAssert] = &Vm::instrAssert;
+	_tabInstr[InstrDump] = &Vm::instrDump;
 	_tabInstr[InstrPrint] = &Vm::instrPrint;
+
+	_tabInstr[InstrAddAll] = &Vm::instrAddAll;
+	_tabInstr[InstrMulAll] = &Vm::instrMulAll;
+	_tabInstr[InstrPopAll] = &Vm::instrPopAll;
+	_tabInstr[InstrDumpR] = &Vm::instrDumpR;
 	_tabInstr[InstrPrintAll] = &Vm::instrPrintAll;
 	_tabInstr[InstrPrintAllR] = &Vm::instrPrintAllR;
 	try
@@ -117,11 +119,36 @@ void Vm::instrPop(tToken *token)
 	_stack.pop_front();
 }
 
+void Vm::instrAddAll(tToken *token)
+{
+	if (_stack.size() == 0)
+		throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Instruction pop all on a empty stack\n\t" + token->data));
+	int i = 0;
+	while (i < _stack.size() - 1)
+	{
+		instrAdd(token);
+		i++;
+	}
+}
+/*
+void Vm::instrPopAll(tToken *token)
+{
+	if (_stack.size() == 0)
+		throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Instruction pop on a empty stack\n\t" + token->data));
+	_stack.pop_front();
+}
+
+void Vm::instrMulAll(tToken *token)
+{
+	if (_stack.size() == 0)
+		throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Instruction pop on a empty stack\n\t" + token->data));
+	_stack.pop_front();
+}
+*/
 void Vm::instrPrint(tToken *token)
 {
 	if (_stack.size() > 0)
 	{
-		/*throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Instruction print on a empty stack\n\t" + token->data));*/
 		if (eInt8 == _stack[0]->getType())
 		{
 			TOperand<int8_t> const & operand = dynamic_cast<TOperand<int8_t> const &>(*_stack[0]);
@@ -130,11 +157,13 @@ void Vm::instrPrint(tToken *token)
 		else
 			throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Instruction print on an wrong type (int8 required)\n\t" + token->data));
 	}
+	else
+		throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Instruction print on a empty stack\n\t" + token->data));
 }
 
 void Vm::instrPrintAllR(tToken *token)
 {
-	/*if (_stack.size() < 1)
+	/*if (_stack.size() == 0)
 		throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Instruction print on a empty stack\n\t" + token->data));*/
 	int i = (int)_stack.size() - 1;
 	while (i >= 0)

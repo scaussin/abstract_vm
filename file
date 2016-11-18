@@ -1,9 +1,5 @@
-push int8(66)
-push int8(64)
+push int32(2)
+push float(2.9)
+mod
 dump
-dumpR
-print
-printAll
-printAllR
-
 exit

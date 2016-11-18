@@ -30,6 +30,7 @@ class Vm {
 		void instrPrintAllR(tToken *);
 
 		void instrAdd(tToken *);
+		void instrAddAll(tToken *);
 		void instrSub(tToken *);
 		void instrMul(tToken *);
 		void instrDiv(tToken *);
