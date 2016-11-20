@@ -121,30 +121,37 @@ void Vm::instrPop(tToken *token)
 
 void Vm::instrAddAll(tToken *token)
 {
-	if (_stack.size() == 0)
-		throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Instruction pop all on a empty stack\n\t" + token->data));
-	int i = 0;
-	while (i < _stack.size() - 1)
+	checkArithmeticInstr(token);
+	int i = (int)_stack.size() - 1;
+	while (i > 0)
 	{
 		instrAdd(token);
-		i++;
+		i--;
 	}
 }
-/*
+
 void Vm::instrPopAll(tToken *token)
 {
-	if (_stack.size() == 0)
-		throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Instruction pop on a empty stack\n\t" + token->data));
-	_stack.pop_front();
+	instrPop(token);
+	int i = (int)_stack.size();
+	while (i > 0)
+	{
+		instrPop(token);
+		i--;
+	}
 }
 
 void Vm::instrMulAll(tToken *token)
 {
-	if (_stack.size() == 0)
-		throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Instruction pop on a empty stack\n\t" + token->data));
-	_stack.pop_front();
+	checkArithmeticInstr(token);
+	int i = (int)_stack.size() - 1;
+	while (i > 0)
+	{
+		instrMul(token);
+		i--;
+	}
 }
-*/
+
 void Vm::instrPrint(tToken *token)
 {
 	if (_stack.size() > 0)

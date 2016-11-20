@@ -1,5 +1,9 @@
-push int32(2)
-push float(2.9)
-mod
+;push double(1.1)
+;push int8(2)
+;push int32(3)
+;push float(4.4)
+;push int16(5)
+dump
+mulAll
 dump
 exit

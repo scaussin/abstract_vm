@@ -22,19 +22,22 @@ class Vm {
 		void instrPush(tToken *);
 		void instrPop(tToken *);
 		void instrDump(tToken *);
-		void instrDumpR(tToken *);
 		void instrExit(tToken *);
 		void instrAssert(tToken *);
 		void instrPrint(tToken *);
-		void instrPrintAll(tToken *);
-		void instrPrintAllR(tToken *);
 
 		void instrAdd(tToken *);
-		void instrAddAll(tToken *);
 		void instrSub(tToken *);
 		void instrMul(tToken *);
 		void instrDiv(tToken *);
 		void instrMod(tToken *);
+
+		void instrDumpR(tToken *);
+		void instrPrintAll(tToken *);
+		void instrPrintAllR(tToken *);
+		void instrAddAll(tToken *);
+		void instrPopAll(tToken *);
+		void instrMulAll(tToken *);
 
 		void checkArithmeticInstr(tToken *);
         void checkDivisionByZero(tToken *);
