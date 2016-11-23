@@ -107,8 +107,8 @@ IOperand const * Factory::createDouble(std::string const & value) const
 	double result;
 	try
 	{
-		std::size_t lastChar;
-		result = std::stod(value, &lastChar);
+		//std::size_t lastChar;
+		result = stod(value);
 	}
 	catch (std::out_of_range & e)
 	{

@@ -1,9 +1,5 @@
-;push double(1.1)
-;push int8(2)
-push int32(3)
-push float(4.4)
-push int16(5)
-dump
-mulAll
+push double(3457.409)
+push double(0.678909)
+add
 dump
 exit

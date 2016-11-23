@@ -159,7 +159,7 @@ void Vm::instrPrint(tToken *token)
 		if (eInt8 == _stack[0]->getType())
 		{
 			TOperand<int8_t> const & operand = dynamic_cast<TOperand<int8_t> const &>(*_stack[0]);
-			std::cout << operand._value << std::endl;
+			std::cout << operand._value;
 		}
 		else
 			throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Instruction print on an wrong type (int8 required)\n\t" + token->data));
@@ -178,7 +178,7 @@ void Vm::instrPrintAllR(tToken *token)
 		if (eInt8 == _stack[i]->getType())
 		{
 			TOperand<int8_t> const & operand = dynamic_cast<TOperand<int8_t> const &>(*_stack[i]);
-			std::cout << operand._value << std::endl;
+			std::cout << operand._value;
 		}
 		else
 			throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Instruction print on an wrong type (int8 required)\n\t" + token->data));
@@ -196,7 +196,7 @@ void Vm::instrPrintAll(tToken *token)
 		if (eInt8 == _stack[i]->getType())
 		{
 			TOperand<int8_t> const & operand = dynamic_cast<TOperand<int8_t> const &>(*_stack[i]);
-			std::cout << operand._value << std::endl;
+			std::cout << operand._value;
 		}
 		else
 			throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Instruction print on an wrong type (int8 required)\n\t" + token->data));
@@ -284,27 +284,27 @@ void Vm::instrDump(tToken *token)
 	{
 		try {
 			TOperand<int8_t> const & operand = dynamic_cast<TOperand<int8_t> const &>(*_stack[i]);
-			std::cout << (int)operand._value << std::endl;
+			std::cout << std::to_string(operand._value) << std::endl;
 		}
 		catch(const std::bad_cast& e) {}
 		try {
 			TOperand<int16_t> const & operand = dynamic_cast<TOperand<int16_t> const &>(*_stack[i]);
-			std::cout << operand._value << std::endl;
+			std::cout << std::to_string(operand._value) << std::endl;
 		}
 		catch(const std::bad_cast& e) {}
 		try {
 			TOperand<int32_t> const & operand = dynamic_cast<TOperand<int32_t> const &>(*_stack[i]);
-			std::cout << operand._value << std::endl;
+			std::cout << std::to_string(operand._value) << std::endl;
 		}
 		catch(const std::bad_cast& e) {}
 		try {
 			TOperand<float> const & operand = dynamic_cast<TOperand<float> const &>(*_stack[i]);
-			std::cout << operand._value << std::endl;
+			std::cout << std::to_string(operand._value) << std::endl;
 		}
 		catch(const std::bad_cast& e) {}
 		try {
 			TOperand<double> const & operand = dynamic_cast<TOperand<double> const &>(*_stack[i]);
-			std::cout << operand._value << std::endl;
+			std::cout << std::to_string(operand._value) << std::endl;
 		}
 		catch(const std::bad_cast& e) {}
 		i++;
@@ -319,27 +319,27 @@ void Vm::instrDumpR(tToken *token)
 	{
 		try {
 			TOperand<int8_t> const & operand = dynamic_cast<TOperand<int8_t> const &>(*_stack[i]);
-			std::cout << (int)operand._value << std::endl;
+			std::cout << std::to_string(operand._value) << std::endl;
 		}
 		catch(const std::bad_cast& e) {}
 		try {
 			TOperand<int16_t> const & operand = dynamic_cast<TOperand<int16_t> const &>(*_stack[i]);
-			std::cout << operand._value << std::endl;
+			std::cout << std::to_string(operand._value) << std::endl;
 		}
 		catch(const std::bad_cast& e) {}
 		try {
 			TOperand<int32_t> const & operand = dynamic_cast<TOperand<int32_t> const &>(*_stack[i]);
-			std::cout << operand._value << std::endl;
+			std::cout << std::to_string(operand._value) << std::endl;
 		}
 		catch(const std::bad_cast& e) {}
 		try {
 			TOperand<float> const & operand = dynamic_cast<TOperand<float> const &>(*_stack[i]);
-			std::cout << operand._value << std::endl;
+			std::cout << std::to_string(operand._value) << std::endl;
 		}
 		catch(const std::bad_cast& e) {}
 		try {
 			TOperand<double> const & operand = dynamic_cast<TOperand<double> const &>(*_stack[i]);
-			std::cout << operand._value << std::endl;
+			std::cout << std::to_string(operand._value) << std::endl;
 		}
 		catch(const std::bad_cast& e) {}
 		i--;

@@ -31,8 +31,5 @@ fclean:			clean
 
 re:				fclean all
 
-#.PHONY:			all clean re fclean
-#.SILENT:
-
 %.o:			%.cpp
 				$(CC) -c $< -o $@
