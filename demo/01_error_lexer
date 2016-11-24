@@ -1,0 +1,14 @@
+	push int15(16)
+push   int8(1)
+push    int16(2)
+ 	push  	int16(3)
+	 push trouble(4.4) ;comment
+push float(5.5)
+push float(5)
+push flote(5)
+trump
+dump
+;comment
+;comment
+;comment
+exit

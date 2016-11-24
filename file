@@ -1,5 +1,0 @@
-push double(3457.409)
-push double(0.678909)
-add
-dump
-exit

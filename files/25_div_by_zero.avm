@@ -1,9 +1,0 @@
-; --------------------
-; 25_div_by_zero.avm -
-; --------------------
-push double(42.0)
-dump
-push int8(0)
-dump
-div
-exit

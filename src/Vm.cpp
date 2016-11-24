@@ -115,7 +115,7 @@ void Vm::instrMod(tToken *token)
 void Vm::instrPop(tToken *token)
 {
 	if (_stack.size() == 0)
-		throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Instruction pop on a empty stack\n\t" + token->data));
+		throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Instruction pop on an empty stack\n\t" + token->data));
 	_stack.pop_front();
 }
 
@@ -162,10 +162,10 @@ void Vm::instrPrint(tToken *token)
 			std::cout << operand._value;
 		}
 		else
-			throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Instruction print on an wrong type (int8 required)\n\t" + token->data));
+			throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Instruction print on a wrong type (int8 required)\n\t" + token->data));
 	}
 	else
-		throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Instruction print on a empty stack\n\t" + token->data));
+		throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Instruction print on an empty stack\n\t" + token->data));
 }
 
 void Vm::instrPrintAllR(tToken *token)
@@ -181,7 +181,7 @@ void Vm::instrPrintAllR(tToken *token)
 			std::cout << operand._value;
 		}
 		else
-			throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Instruction print on an wrong type (int8 required)\n\t" + token->data));
+			throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Instruction print on a wrong type (int8 required)\n\t" + token->data));
 		i--;
 	}
 }
@@ -199,7 +199,7 @@ void Vm::instrPrintAll(tToken *token)
 			std::cout << operand._value;
 		}
 		else
-			throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Instruction print on an wrong type (int8 required)\n\t" + token->data));
+			throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Instruction print on a wrong type (int8 required)\n\t" + token->data));
 		i++;
 	}
 }
@@ -207,7 +207,7 @@ void Vm::instrPrintAll(tToken *token)
 void Vm::instrAssert(tToken *token)
 {
 	if (_stack.size() == 0)
-		throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Instruction assert on a empty stack\n\t" + token->data + " " + token->right->data));
+		throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Instruction assert on an empty stack\n\t" + token->data + " " + token->right->data));
 	try {
 		TOperand<int8_t> const & operand = dynamic_cast<TOperand<int8_t> const &>(*_stack[0]);
 		if (_valueTypeToOperandType[token->right->valueType] == operand._type)
@@ -349,31 +349,31 @@ void Vm::instrDumpR(tToken *token)
 void Vm::checkDivisionByZero(tToken *token)
 {
 	try {
-		TOperand<int8_t> const & divider = dynamic_cast<TOperand<int8_t> const &>(*_stack[1]);
+		TOperand<int8_t> const & divider = dynamic_cast<TOperand<int8_t> const &>(*_stack[0]);
 		if (divider._value == 0)
 	 		throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Division by zero\n\t" + token->data));
 	}
 	catch(const std::bad_cast& e) {}
 	try {
-		TOperand<int16_t> const & divider = dynamic_cast<TOperand<int16_t> const &>(*_stack[1]);
+		TOperand<int16_t> const & divider = dynamic_cast<TOperand<int16_t> const &>(*_stack[0]);
 		if (divider._value == 0)
 	 		throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Division by zero\n\t" + token->data));
 	}
 	catch(const std::bad_cast& e) {}
 	try {
-		TOperand<int32_t> const & divider = dynamic_cast<TOperand<int32_t> const &>(*_stack[1]);
+		TOperand<int32_t> const & divider = dynamic_cast<TOperand<int32_t> const &>(*_stack[0]);
 		if (divider._value == 0)
 	 		throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Division by zero\n\t" + token->data));
 	}
 	catch(const std::bad_cast& e) {}
 	try {
-		TOperand<float> const & divider = dynamic_cast<TOperand<float> const &>(*_stack[1]);
+		TOperand<float> const & divider = dynamic_cast<TOperand<float> const &>(*_stack[0]);
 		if (divider._value == 0)
 	 		throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Division by zero\n\t" + token->data));
 	}
 	catch(const std::bad_cast& e) {}
 	try {
-		TOperand<double> const & divider = dynamic_cast<TOperand<double> const &>(*_stack[1]);
+		TOperand<double> const & divider = dynamic_cast<TOperand<double> const &>(*_stack[0]);
 		if (divider._value == 0)
 	 		throw(AbstractException("line: " + std::to_string(token->line) + " \033[31mError run time:\033[m Division by zero\n\t" + token->data));
 	}

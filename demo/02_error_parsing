@@ -1,0 +1,18 @@
+	push int8(0)
+push   int16(1)
+push    int32(2)
+ 	push  	int16(3)
+	 push double(4.4) ;comment
+push float(5.5)
+float(6.6)
+push 
+dump
+dumpR
+;comment
+;comment
+;comment
+addAll int8(9)
+
+dump
+exit
+dump

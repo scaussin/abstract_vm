@@ -1,0 +1,4 @@
+push int8(1)
+pop
+pop
+exit

@@ -1,0 +1,54 @@
+;comment
+push int8(0)
+push int16(1)
+push int32(2)
+push int32(3)
+push int32(4)
+push int32(5)
+push int32(6)
+pop
+dumpR
+push int8(61)
+print
+pop
+addAll
+dump
+popAll
+
+;HARDCORE
+push int8(10)
+print
+pop
+push int8(72)
+push int8(65)
+push int8(82)
+push int8(68)
+push int8(67)
+push int8(79)
+push int8(82)
+push int8(69)
+push int8(10)
+printAllR
+assert int8(10)
+pop
+printAll
+push int8(10)
+print
+print
+popAll
+
+;comment
+push float(10.0)
+push double(15.0)
+push int32(75)
+push int16(54)
+push int8(42)
+dumpR
+push int8(61)
+print
+pop
+mulAll
+assert double(25515000.0)
+dump
+
+exit

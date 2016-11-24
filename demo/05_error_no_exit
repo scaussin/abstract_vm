@@ -1,0 +1,3 @@
+push double(42.0)
+push int8(0)
+dump
